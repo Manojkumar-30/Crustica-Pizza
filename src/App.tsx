@@ -500,7 +500,7 @@ const Hero = () => {
               className="relative w-full h-full rounded-full overflow-hidden shadow-[0_60px_90px_rgba(0,0,0,0.5)] border-[8px] sm:border-[8px] border-white/5 bg-white/10"
             >
               <img
-                src="/src/Assets/main_pizza.jpg"
+                src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=80&w=800"
                 alt="Premium Pizza"
                 className="w-full h-full object-cover scale-100"
               />
