@@ -5,21 +5,25 @@
 
 import { useState, useEffect, useRef, useMemo } from "react";
 import { BrowserRouter, Routes, Route, Link, useLocation } from "react-router-dom";
-import { motion, AnimatePresence, useScroll, useTransform } from "motion/react";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
 
 import LogoImage from "./Assets/crustica-logo.png";
 import Pizza1 from "./Assets/pizza_1.jpg";
 import Cheif from "./Assets/cheif.jpg";
 import MainEntire from "./Assets/main_entire.jpg";
 import Interior from "./Assets/interior.jpg";
-import ExteriorMain from "./Assets/exterior_main.jpg";
 import Fries from "./Assets/fries.jpg";
 import Juice from "./Assets/Juice.jpg";
 import Billing from "./Assets/Billing.jpg";
+import interior from "./Assets/Influencer-1.png";
+import logoZomato from "./Assets/zomato-removebg-preview.png";
+import logoSwiggy from "./Assets/Swiggy-Logo.png";
+import logoMagicpin from "./Assets/magicpin-removebg-preview.png";
 
 import {
   Menu as MenuIcon,
@@ -31,6 +35,10 @@ import {
   ArrowRight,
   Info,
   Utensils,
+  Camera,
+  Coffee,
+  Sun,
+  Moon,
   Image as GalleryIcon,
   MessageCircle,
   Zap,
@@ -43,90 +51,107 @@ import {
   ArrowUpRight,
   ExternalLink,
   ChevronRight,
-  Mail
+  Mail,
+  Star,
+  Plus,
+  Flame,
+  MonitorOff,
+  ShoppingBag,
+  TrendingUp,
+  Award,
+  Zap as ZapIcon
 } from "lucide-react";
 import { menuData, addOns } from "./data/menu";
+import { image } from "framer-motion/client";
+import { img } from "framer-motion/m";
 
 // --- Components ---
 
-const OrderModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
-  const platforms = [
-    {
-      name: "Zomato",
-      url: "https://www.zomato.com/bangalore/crustica-pizza-banaswadi-bangalore/order",
-      color: "bg-[#CB202D]",
-      desc: "Order via Zomato",
-      icon: (
-        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm-3-13.5v7h1.5v-7h-1.5zm.75-1.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75-.75.336-.75.75.336.75.75.75zm3.75 3c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm1.5 7.5v-1.5h-1.5v1.5H15zm-2.25 0v-1.5H12V17h.75zm1.5-3v-1.5h-1.5V14H15zm-2.25 0v-1.5H12V14h.75z" />
-        </svg>
-      )
-    },
-    {
-      name: "Swiggy",
-      url: "https://www.swiggy.com/city/bangalore/crustica-pizzeria-kammanahalli/kalyan-nagar-kammanahalli-rest1302425",
-      color: "bg-[#FC8019]",
-      desc: "Order via Swiggy",
-      icon: (
-        <svg viewBox="0 0 24 24" className="w-6 h-6 fill-current">
-          <path d="M18.528 5.4c-.23-.377-.674-.6-1.127-.6H6.6c-.453 0-.897.223-1.127.6-.23.377-.23.834 0 1.2l5.313 8.7a1.328 1.328 0 0 0 2.254 0l5.488-9c.23-.366.23-.823 0-1.2v-.7zM12 15c-.443 0-.877-.214-1.127-.6L5.56 5.7h12.879l-5.312 8.7c-.25.386-.684.6-1.127.6z" />
-        </svg>
-      )
-    },
-    {
-      name: "Magicpin",
-      url: "https://magicpin.in/walletRecharge?merchantId=57637832",
-      color: "bg-[#6533FF]",
-      desc: "Order via Magicpin",
-      icon: <Zap className="w-6 h-6" />
-    }
-  ];
+const ORDER_PLATFORMS = [
+  {
+    name: "Zomato",
+    url: "https://www.zomato.com/bangalore/crustica-pizza-banaswadi-bangalore/order",
+    color: "bg-[#CB202D]",
+    desc: "Instant delivery",
+    icon: Utensils
+  },
+  {
+    name: "Swiggy",
+    url: "https://www.swiggy.com/city/bangalore/crustica-pizzeria-kammanahalli/kalyan-nagar-kammanahalli-rest1302425",
+    color: "bg-[#FC8019]",
+    desc: "Fast service",
+    icon: Zap
+  },
+  {
+    name: "Magicpin",
+    url: "https://magicpin.in/walletRecharge?merchantId=57637832",
+    color: "bg-[#6533FF]",
+    desc: "Exclusive savings",
+    icon: Star,
+    img: logoSwiggy
+  }
+];
 
+const OrderModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) => {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center px-4">
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center px-4 overflow-hidden">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-primary-green/90 backdrop-blur-md"
+            className="absolute inset-0 bg-black/90 backdrop-blur-3xl"
           />
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            className="relative w-full max-w-md glass-fresh rounded-[2rem] p-10 overflow-hidden"
+            initial={{ y: 100, opacity: 0, scale: 0.9 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 40, opacity: 0, scale: 0.95 }}
+            className="relative z-10 w-full max-w-lg bg-[#0D1A07] border border-white/10 rounded-[3rem] p-10 sm:p-14 shadow-3xl overflow-hidden"
           >
-            <button onClick={onClose} className="absolute top-6 right-6 text-cream/40 hover:text-cream transition-colors">
-              <X className="w-6 h-6" />
-            </button>
-            <h3 className="text-3xl font-display font-bold text-cream mb-2 tracking-tight">Order Online</h3>
-            <p className="text-cream/40 text-sm mb-10">Select a platform to browse our menu.</p>
+            <div className="absolute top-0 right-0 w-64 h-64 bg-accent-green/10 blur-3xl rounded-full -mr-20 -mt-20" />
 
-            <div className="space-y-4">
-              {platforms.map((platform) => (
-                <a
-                  key={platform.name}
-                  href={platform.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`flex items-center justify-between p-6 rounded-2xl ${platform.color} text-white font-bold transition-all hover:scale-[1.02] active:scale-95 group`}
-                >
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                      {platform.icon}
+            <button
+              onClick={onClose}
+              className="absolute top-8 right-8 text-white/20 hover:text-white transition-colors"
+            >
+              <X size={24} />
+            </button>
+
+            <div className="relative z-10">
+              <span className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 text-[10px] font-black italic">Instant Order</span>
+              <h2 className="text-4xl sm:text-5xl font-display font-black text-white mb-10 tracking-tightest uppercase italic">Select <br /> <span className="text-accent-green font-light lowercase">Platform.</span></h2>
+
+              <div className="space-y-4">
+                {ORDER_PLATFORMS.map((plat) => (
+                  <motion.a
+                    key={plat.name}
+                    href={plat.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    whileHover={{ scale: 1.02, x: 10 }}
+                    whileTap={{ scale: 0.98 }}
+                    className={`flex items-center justify-between p-6 rounded-2xl ${plat.color} text-white group shadow-xl`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
+                        <plat.icon size={22} />
+                      </div>
+                      <div>
+                        <p className="font-black uppercase tracking-widest text-sm">{plat.name}</p>
+                        <p className="text-[10px] opacity-60 uppercase tracking-widest font-mono mt-1">{plat.desc}</p>
+                      </div>
                     </div>
-                    <div className="flex flex-col">
-                      <span className="text-xl">{platform.name}</span>
-                      <span className="text-[10px] opacity-70 tracking-widest uppercase font-mono">{platform.desc}</span>
-                    </div>
-                  </div>
-                  <ChevronRight className="w-5 h-5 opacity-50 group-hover:opacity-100 transition-opacity" />
-                </a>
-              ))}
+                    <ArrowUpRight className="opacity-40 group-hover:opacity-100 transition-opacity" />
+                  </motion.a>
+                ))}
+              </div>
             </div>
+
+            <p className="mt-12 text-center text-white/10 font-mono text-[9px] uppercase tracking-[0.4em] font-black">
+              Crafted with sourdough love • © 2026
+            </p>
           </motion.div>
         </div>
       )}
@@ -138,44 +163,164 @@ const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const [scrollDir, setScrollDir] = useState<"up" | "down">("up");
+  const [lastScrollY, setLastScrollY] = useState(0);
   const location = useLocation();
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener("scroll", handleScroll);
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        setScrollDir("down");
+      } else {
+        setScrollDir("up");
+      }
+      setLastScrollY(currentScrollY);
+      setIsScrolled(currentScrollY > 50);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [lastScrollY]);
 
   const navLinks = [
     { name: "Our Story", href: "/#about", isStatic: false },
     { name: "Menu", href: "/menu", isStatic: true },
-    { name: "Ingredients", href: "/#ingredients", isStatic: false },
     { name: "Gallery", href: "/#gallery", isStatic: false },
-    { name: "Visit", href: "/#contact", isStatic: false },
+    { name: "Visit Us", href: "/#contact", isStatic: false },
   ];
 
   const handleNavClick = (href: string) => {
     setIsMobileMenuOpen(false);
     if (href.startsWith("/#") && location.pathname === "/") {
       const id = href.split("#")[1];
-      document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+      const el = document.getElementById(id);
+      if (el) {
+        const offset = 80;
+        const bodyRect = document.body.getBoundingClientRect().top;
+        const elementRect = el.getBoundingClientRect().top;
+        const elementPosition = elementRect - bodyRect;
+        const offsetPosition = elementPosition - offset;
+        window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+      }
     }
+  };
+
+  const isNavVisible = !isScrolled || scrollDir === "up" || isMobileMenuOpen;
+
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      y: "-100%",
+      transition: {
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1],
+        staggerChildren: 0.05,
+        staggerDirection: -1
+      }
+    },
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+        staggerChildren: 0.1,
+        delayChildren: 0.3
+      }
+    }
+  };
+
+  const linkVariants = {
+    closed: { opacity: 0, y: 20 },
+    open: { opacity: 1, y: 0 }
   };
 
   return (
     <>
       <OrderModal isOpen={isOrderModalOpen} onClose={() => setIsOrderModalOpen(false)} />
+      {/* Mobile Menu Overlay - Outside main nav for perfect positioning */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="lg:hidden fixed inset-0 z-[120] bg-black/60 backdrop-blur-md"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
+            <motion.div
+              variants={menuVariants}
+              initial="closed"
+              animate="open"
+              exit="closed"
+              className="absolute inset-x-0 top-0 h-screen bg-[#0A1F05]/95 backdrop-blur-3xl flex flex-col items-center justify-center p-8 pt-24"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/wood-pattern.png')] opacity-5 pointer-events-none" />
+
+              <div className="flex flex-col items-center gap-8 relative z-10 w-full text-center">
+                {navLinks.map((item) => (
+                  <motion.div
+                    key={item.name}
+                    variants={linkVariants}
+                  >
+                    {item.isStatic ? (
+                      <Link
+                        to={item.href}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="text-5xl sm:text-6xl font-display font-black text-white hover:text-accent-green transition-all duration-500 tracking-tightest uppercase italic block"
+                      >
+                        {item.name}
+                      </Link>
+                    ) : (
+                      <a
+                        href={item.href}
+                        onClick={(e) => {
+                          if (location.pathname === "/") {
+                            e.preventDefault();
+                            handleNavClick(item.href);
+                          } else {
+                            setIsMobileMenuOpen(false);
+                          }
+                        }}
+                        className="text-5xl sm:text-6xl font-display font-black text-white hover:text-accent-green transition-all duration-500 tracking-tightest uppercase italic block"
+                      >
+                        {item.name}
+                      </a>
+                    )}
+                  </motion.div>
+                ))}
+
+                <motion.div variants={linkVariants} className="w-full h-px bg-white/10 my-4 max-w-[120px]" />
+
+                <motion.button
+                  variants={linkVariants}
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    setIsOrderModalOpen(true);
+                  }}
+                  className="w-full max-w-sm py-6 rounded-[2rem] bg-accent-green text-primary-green font-black text-2xl shadow-[0_20px_50px_rgba(118,255,3,0.3)] hover:scale-105 active:scale-95 transition-transform"
+                >
+                  ORDER NOW
+                </motion.button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       <nav
-        className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 px-6 py-5 ${isScrolled || isMobileMenuOpen
-          ? "bg-[#1A3A0F]/80 backdrop-blur-xl border-b border-white/5 shadow-2xl"
+        className={`fixed top-0 left-0 right-0 z-[120] transition-all duration-700 px-4 sm:px-6 md:px-8 py-4 lg:py-6 ${isScrolled || isMobileMenuOpen
+          ? "bg-black/20 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/40"
           : "bg-transparent"
-          }`}
+          } ${isNavVisible ? "translate-y-0 opacity-100" : "-translate-y-full opacity-0"}`}
       >
         <div className="max-w-7xl mx-auto flex items-center justify-between">
-          {/* Left: Logo */}
-          <Link to="/" className="flex items-center shrink-0">
-            <img src={LogoImage} alt="Crustica Logo" className="h-12 md:h-16 w-auto object-contain transition-transform hover:scale-105" />
+          {/* Left: LogoImage */}
+          <Link to="/" className="shrink-0 ">
+            <img src={LogoImage} alt="Crustica Logo" className="h-10 sm:h-12 lg:h-14 w-auto object-contain scale-110" />
           </Link>
+
 
           {/* Center: Links */}
           <div className="hidden lg:flex items-center gap-8 xl:gap-12">
@@ -184,10 +329,10 @@ const Navbar = () => {
                 <Link
                   key={item.name}
                   to={item.href}
-                  className="text-cream/70 hover:text-light-green font-medium text-[11px] tracking-[0.2em] uppercase transition-colors relative group"
+                  className="text-white/80 hover:text-accent-green font-medium text-[11px] tracking-[0.25em] uppercase transition-all duration-300 relative group"
                 >
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-green transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-4 left-1/2 w-0 h-[2px] bg-accent-green transition-all duration-300 group-hover:w-full group-hover:left-0 shadow-[0_0_10px_#76FF03]"></span>
                 </Link>
               ) : (
                 <a
@@ -199,244 +344,193 @@ const Navbar = () => {
                       handleNavClick(item.href);
                     }
                   }}
-                  className="text-cream/70 hover:text-light-green font-medium text-[11px] tracking-[0.2em] uppercase transition-colors relative group"
+                  className="text-white/70 hover:text-accent-green font-medium text-[11px] tracking-[0.25em] uppercase transition-all duration-300 relative group"
                 >
                   {item.name}
-                  <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent-green transition-all duration-300 group-hover:w-full"></span>
+                  <span className="absolute -bottom-4 left-1/2 w-0 h-[2px] bg-accent-green transition-all duration-300 group-hover:w-full group-hover:left-0 shadow-[0_0_10px_#76FF03]"></span>
                 </a>
               )
             ))}
           </div>
 
           {/* Right: Actions */}
-          <div className="hidden lg:flex items-center gap-8 shrink-0">
-            <div className="flex items-center gap-2 text-cream/70 text-xs font-mono">
-              <Phone className="w-3.5 h-3.5 text-accent-green" />
-              <span>+91 81977 99090</span>
+          <div className="flex items-center gap-4 sm:gap-6 lg:gap-10 shrink-0 relative z-[140]">
+            <div className="hidden xl:flex items-center gap-3 text-white/120 text-xs font-mono">
+              <Phone className="w-4 h-4 text-accent-green" />
+              <span className="tracking-widest">+91 81977 99090</span>
             </div>
             <button
               onClick={() => setIsOrderModalOpen(true)}
-              className="px-8 py-3 rounded-xl bg-[#4CAF50] text-cream text-[13px] font-bold hover:bg-[#76FF03] hover:text-[#1A3A0F] transition-all hover:scale-105 shadow-lg shadow-black/20"
+              className="hidden sm:block px-6 lg:px-10 py-3 lg:py-3.5 rounded-xl bg-accent-green text-primary-green text-xs lg:text-[13px] font-black tracking-widest hover:bg-white transition-all duration-500 hover:scale-105 active:scale-95 shadow-[0_15px_30px_rgba(118,255,3,0.2)]"
             >
               ORDER NOW
             </button>
-          </div>
-
-          <button
-            className="lg:hidden p-2 text-cream"
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          >
-            {isMobileMenuOpen ? <X /> : <MenuIcon />}
-          </button>
-        </div>
-
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              className="lg:hidden fixed inset-0 top-0 bg-[#1A3A0F] flex flex-col items-center justify-center gap-8 py-10 px-6 z-[99]"
+            <button
+              className="p-3 text-white hover:text-accent-green transition-all duration-500 lg:hidden rounded-2xl bg-white/5 border border-white/10 hover:bg-accent-green/10"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
-              <button
-                onClick={() => setIsMobileMenuOpen(false)}
-                className="absolute top-8 right-8 text-cream p-2"
-              >
-                <X className="w-8 h-8" />
-              </button>
-              {navLinks.map((item) => (
-                item.isStatic ? (
-                  <Link
-                    key={item.name}
-                    to={item.href}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                    className="text-4xl font-display font-bold text-cream hover:text-accent-green transition-colors"
-                  >
-                    {item.name}
-                  </Link>
-                ) : (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    onClick={(e) => {
-                      if (location.pathname === "/") {
-                        e.preventDefault();
-                        handleNavClick(item.href);
-                      } else {
-                        setIsMobileMenuOpen(false);
-                      }
-                    }}
-                    className="text-4xl font-display font-bold text-cream hover:text-accent-green transition-colors"
-                  >
-                    {item.name}
-                  </a>
-                )
-              ))}
-              <div className="w-full h-px bg-white/5 my-4" />
-              <button
-                onClick={() => {
-                  setIsMobileMenuOpen(false);
-                  setIsOrderModalOpen(true);
-                }}
-                className="w-full py-6 rounded-2xl bg-[#4CAF50] text-[#1A3A0F] font-black text-xl shadow-2xl"
-              >
-                ORDER NOW
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+              {isMobileMenuOpen ? <X size={26} strokeWidth={2.5} /> : <MenuIcon size={26} strokeWidth={2.5} />}
+            </button>
+          </div>
+        </div>
       </nav>
     </>
   );
 };
 
+
 const Hero = () => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const headingRef = useRef<HTMLDivElement>(null);
-  const subContentRef = useRef<HTMLDivElement>(null);
-  const pizzaRef = useRef<HTMLDivElement>(null);
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
+  const heroRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Heading Stagger
-      const words = headingRef.current?.querySelectorAll(".hero-word");
-      if (words) {
-        gsap.fromTo(words,
-          { opacity: 0, y: 100, rotateX: -45 },
-          {
-            opacity: 1, y: 0, rotateX: 0,
-            duration: 1.2,
-            stagger: 0.3,
-            ease: "expo.out"
-          }
-        );
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  const pizzaY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+  const pizzaRotate = useTransform(scrollYProgress, [0, 1], [0, 45]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.5
       }
+    }
+  };
 
-      // Pizza Entrance
-      gsap.fromTo(pizzaRef.current,
-        { scale: 0.5, opacity: 0, rotate: -30 },
-        { scale: 1, opacity: 1, rotate: 0, duration: 1.5, ease: "elastic.out(1, 0.7)" }
-      );
-
-      // Soft Floating
-      gsap.to(pizzaRef.current, {
-        y: -30,
-        rotate: 5,
-        duration: 4,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut"
-      });
-
-      // Parallax on Scroll
-      gsap.to(pizzaRef.current, {
-        scrollTrigger: {
-          trigger: heroRef.current,
-          start: "top top",
-          end: "bottom top",
-          scrub: 1.5
-        },
-        y: 200,
-        rotate: 45,
-        scale: 1.2
-      });
-
-      // Descriptions Fade-in
-      gsap.fromTo(".hero-desc",
-        { opacity: 0, x: -30 },
-        { opacity: 1, x: 0, duration: 1, delay: 1.5, ease: "power2.out" }
-      );
-    }, heroRef);
-
-    return () => ctx.revert();
-  }, []);
+  const itemVariants = {
+    hidden: { opacity: 0, y: 40, filter: "blur(10px)" },
+    show: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: { duration: 1.2, ease: [0.22, 1, 0.36, 1] }
+    }
+  };
 
   return (
-    <section id="hero" ref={heroRef} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#1A3A0F]">
-      <OrderModal isOpen={isOrderModalOpen} onClose={() => setIsOrderModalOpen(false)} />
+    <section id="hero" ref={heroRef} className="relative min-h-screen flex items-center overflow-hidden bg-[#0D1A07] selection:bg-accent-green py-24 sm:py-32 lg:py-0">
 
-      {/* Background Gradient & Texture */}
-      <div className="absolute inset-0 z-0 transition-opacity duration-1000">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,_rgba(76,175,80,0.15),_transparent_70%)]" />
-        <div className="absolute inset-0 bg-gradient-to-br from-[#1A3A0F] via-[#2D5016] to-[#1A3A0F]" />
+      {/* Hyper-Dimensional Background */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,_rgba(118,255,3,0.12),_transparent_60%)]" />
+        <div className="absolute inset-0 bg-gradient-to-tr from-[#1A3A0F] via-[#2D5016] to-[#1A3A0F] opacity-60" />
+
+        {/* Neon Blobs */}
+        <motion.div
+          animate={{ x: [-100, 100, -100], y: [-50, 50, -50] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-accent-green/10 blur-[150px] rounded-full"
+        />
+        <motion.div
+          animate={{ x: [100, -100, 100], y: [50, -50, 50] }}
+          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          className="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-primary-green/20 blur-[180px] rounded-full"
+        />
+
+        {/* Grain Texture */}
+        <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
+        <div className="absolute inset-0 opacity-[0.05] mix-blend-overlay" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/wood-pattern.png')" }} />
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 w-full relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-16 items-center pt-32 lg:pt-0">
-        {/* Left Side: Staggered Content */}
-        <div className="text-left perspective-[1000px]">
-          <div ref={headingRef} className="mb-8 overflow-hidden">
-            <h1 className="text-[12vw] lg:text-[5vw] font-display font-black text-cream leading-[0.8] tracking-tighter uppercase">
-              <span className="block hero-word">Fresh.</span>
-              <span className="block hero-word text-[#76FF03]">Sourdough.</span>
-              <span className="block hero-word font-light italic opacity-90 lowercase tracking-normal">Crafted.</span>
-            </h1>
-          </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10 w-full grid grid-cols-1 lg:grid-cols-2 items-center gap-12 sm:gap-20">
+        {/* Text Content */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="show"
+          style={{ opacity: textOpacity }}
+          className="text-left w-full"
+        >
+          <motion.div variants={itemVariants} className="mb-6 sm:mb-8 font-mono text-[10px] sm:text-xs font-black text-accent-green tracking-[0.5em] uppercase">
+            Bangalore's Finest Sourdough
+          </motion.div>
 
-          <div className="hero-desc space-y-8">
-            <div className="flex flex-wrap items-center  gap-4">
-              {["100% Pure Vegetarian", "Namma Ooru", "Namma Sourdough Pizza"].map((tag) => (
-                <span key={tag} className="px-4 py-1.5 rounded-full border border-white/10 bg-white/5 text-[10px] font-mono uppercase tracking-[0.2em] text-[#76FF03]">
-                  {tag}
-                </span>
-              ))}
-            </div>
+          <motion.h1
+            variants={itemVariants}
+            className="text-[clamp(3rem,10vw,6.5rem)] font-display font-black text-white leading-[0.82] tracking-tightest uppercase mb-8 sm:mb-10"
+          >
+            Pure. <br />
+            <span className="text-accent-green drop-shadow-[0_0_30px_rgba(118,255,3,0.4)]">Artesanal</span> <br />
+            <span className="font-light italic opacity-90 lowercase tracking-tighter">Sourdough.</span>
+          </motion.h1>
 
-            <p className="max-w-md text-cream font-light italic opacity-90 text-lg md:text-xl font-light leading-relaxed">
-              Handcrafted sourdough pizzas made with fresh local ingredients and a 24-hour slow fermentation process.
-            </p>
+          <motion.p
+            variants={itemVariants}
+            className="max-w-xl text-white/60 text-base sm:text-lg lg:text-xl font-medium leading-relaxed tracking-tight mb-10 sm:mb-12"
+          >
+            Handcrafted sourdough pizzas made with love, fresh local ingredients, and a whole lot of Bangalore spirit.
+          </motion.p>
 
-            <div className="flex flex-wrap items-center gap-6 pt-6">
-              <motion.button
-                onClick={() => setIsOrderModalOpen(true)}
-                whileHover={{ scale: 1.05, y: -2, backgroundColor: "#fdfdfdff", color: "#1A3A0F" }}
-                whileTap={{ scale: 0.95 }}
-                className="px-12 py-5 rounded-2xl bg-[#4CAF50] text-cream font-black tracking-[0.2em] shadow-[0_20px_50px_rgba(76,175,80,0.3)] transition-all"
-              >
-                ORDER NOW
-              </motion.button>
-              <Link to="/menu">
-                <motion.button
-                  whileHover={{ scale: 1.05, border: "1px solid #ffffffff" }}
-                  whileTap={{ scale: 0.95 }}
-                  className="px-12 py-5 rounded-2xl border border-white/20 bg-transparent text-cream font-bold tracking-[0.1em] transition-all"
-                >
-                  EXPLORE MENU
-                </motion.button>
-              </Link>
-            </div>
-          </div>
-        </div>
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
+            <button
+              onClick={() => setIsOrderModalOpen(true)}
+              className="px-8 sm:px-12 py-4 sm:py-6 rounded-2xl sm:rounded-[2rem] bg-accent-green text-primary-green font-black tracking-widest text-xs sm:text-sm shadow-[0_20px_50px_rgba(118,255,3,0.3)] hover:scale-105 active:scale-95 transition-all duration-500"
+            >
+              ORDER NOW
+            </button>
+            <Link to="/menu" className="w-full sm:w-auto">
+              <button className="w-full px-8 sm:px-12 py-4 sm:py-6 rounded-2xl sm:rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl text-white font-bold tracking-widest text-xs sm:text-sm hover:border-accent-green hover:text-accent-green transition-all duration-500">
+                EXPLORE MENU
+              </button>
+            </Link>
+          </motion.div>
+        </motion.div>
 
-        {/* Right Side: Popping Visual */}
-        <div className="relative flex justify-center items-center">
-          <div ref={pizzaRef} className="relative z-10 w-full max-w-[650px] group">
-            {/* Shadows & Glow */}
-            <div className="absolute inset-0 bg-[#76FF03]/20 blur-[120px] rounded-full scale-110 opacity-30 group-hover:opacity-60 transition-opacity duration-1000" />
-            <div className="absolute bottom-[-10%] left-[10%] right-[10%] h-[20px] bg-black/60 blur-[40px] rounded-[100%]" />
+        {/* Right Side: Product Visual */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8, rotate: -10 }}
+          animate={{ opacity: 1, scale: 1, rotate: 0 }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+          style={{ y: pizzaY, rotateZ: pizzaRotate }}
+          className="relative flex justify-center items-center py-12 lg:py-0"
+        >
+          <div className="relative w-full max-w-[350px] sm:max-w-[450px] lg:max-w-[550px] aspect-square">
+            <div className="absolute inset-0 bg-accent-green/20 blur-[100px] sm:blur-[150px] rounded-full scale-110 opacity-0" />
 
             <motion.div
-              whileHover={{ scale: 1.05, rotateZ: 5 }}
-              transition={{ type: "spring", stiffness: 200 }}
-              className="relative rounded-full"
+              animate={{ y: [0, -20, 0], rotate: [0, 2, 0] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              className="relative w-full h-full rounded-full overflow-hidden shadow-[0_60px_90px_rgba(0,0,0,0.5)] border-[8px] sm:border-[8px] border-white/5 bg-white/10"
             >
               <img
-                src="https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=80&w=1200"
-                alt="3D Popping Margherita Pizza"
-                className="w-full h-auto object-cover drop-shadow-[0_35px_35px_rgba(0,0,0,0.5)]"
+                src="/src/Assets/main_pizza.jpg"
+                alt="Premium Pizza"
+                className="w-full h-full object-cover scale-100"
               />
-              {/* Optional: Add reflection or highlights via overlay */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent pointer-events-none rounded-full" />
+              <div className="absolute inset-0 bg-gradient-to-tr from-white/10 via-transparent to-black/20 pointer-events-none" />
+            </motion.div>
+
+            {/* Float tags */}
+            <motion.div
+              animate={{ y: [0, -10, 0], rotate: [-15, -12, -15] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute -top-6 -right-6 sm:-top-8 sm:-right-1 bg-accent-green text-primary-green px-4 sm:px-6 py-2 sm:py-3 rounded-full font-black text-[9px] sm:text-[10px] tracking-widest shadow-2xl z-40"
+            >
+              100% Pure Veg.
+            </motion.div>
+            <motion.div
+              animate={{ y: [0, -10, 0], rotate: [-15, -12, -15] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeIn" }}
+              className="absolute sm:-bottom-1 bg-white text-black px-4 sm:px-6 py-2 sm:py-3 rounded-full font-black text-[9px] sm:text-[10px] tracking-widest shadow-2xl z-40"
+            >
+              Local Love.
             </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Marquee remains but styled for depth */}
-      <div className="absolute bottom-0 left-0 right-0 py-4 border-t border-white/5 bg-[#1A3A0F]/75 backdrop-blur-md overflow-hidden z-10">
-        <div className="flex animate-marquee-fast whitespace-nowrap gap-28">
-          {Array(8).fill("PURE VEG • SLOW FERMENTED • ARTISAN CRUST").map((text, i) => (
-            <span key={i} className="text-xxl font-display font-light tracking-[0.4em] uppercase">{text}</span>
+      {/* Marquee Footer */}
+      <div className="absolute bottom-0 left-0 right-0 py-8 sm:py-12 border-t border-white/5 bg-primary-green/60 backdrop-blur-3xl overflow-hidden z-20">
+        <div className="flex animate-marquee-fast whitespace-nowrap gap-24 sm:gap-48">
+          {Array(8).fill("100% PURE VEG • SLOW FERMENTED • ARTISAN CRUST • NAMMA OORU").map((text, i) => (
+            <span key={i} className="text-xl sm:text-xl font-display font-normal text-white/50 tracking-[0.3em] sm:tracking-[0.5em] uppercase transition-colors pointer-events-none">{text}</span>
           ))}
         </div>
       </div>
@@ -446,37 +540,51 @@ const Hero = () => {
 
 const AboutSection = () => {
   const pillars = [
-    { icon: Leaf, title: "24h Sourdough", desc: "Long fermentation for deep, nuanced flavor and easy digestion." },
+    { icon: Leaf, title: "48h Sourdough", desc: "Long fermentation for deep, nuanced flavor and easy digestion." },
     { icon: Utensils, title: "100% Vegetarian", desc: "A creative playground for the finest botanical ingredients." },
     { icon: ChefHat, title: "Artisan Craft", desc: "Hand-stretched dough and small-batch preparation." },
     { icon: MapPin, title: "Local Bounty", desc: "Partnering with local farmers for the freshest harvest." },
   ];
 
   return (
-    <section id="about" className="py-32 px-6 bg-primary-green/95 relative overflow-hidden">
+    <section id="about" className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-primary-green relative overflow-hidden">
+      {/* Decorative leaf background */}
+      <motion.div
+        initial={{ opacity: 0, rotate: -45 }}
+        whileInView={{ opacity: 0.1, rotate: 0 }}
+        className="absolute -left-20 top-0 w-64 sm:w-96 h-64 sm:h-96 bg-accent-green blur-[80px] sm:blur-[120px] rounded-full pointer-events-none"
+      />
+
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-24">
-          <span className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 text-xl gap-2">Our Commitment</span>
-          <h2 className="text-5xl md:text-7xl font-display font-bold text-cream leading-[1.1]">
-            PURE INGREDIENTS.<br /><span className="text-light-green italic opacity-90">HONEST CRAFT.</span>
+        <div className="text-center mb-16 sm:mb-24 md:mb-32">
+          <motion.span
+            initial={{ opacity: 0, letterSpacing: "1em" }}
+            whileInView={{ opacity: 1, letterSpacing: "0.5em" }}
+            className="text-accent-green font-mono uppercase block mb-6 sm:mb-8 text-[14px] sm:text-lg font-black"
+          >
+            Our Story
+          </motion.span>
+          <h2 className="text-5xl sm:text-7xl lg:text-[7rem] font-display font-black text-white tracking-tightest leading-[0.8] uppercase">
+            Pure Roots. <br /><span className="text-accent-green italic font-light lowercase">Love of Veg Pizza</span>
           </h2>
+          <p className="text-white/50 text-sm leading-relaxed mt-6 sm:mt-8 md:mt-10 text-center max-w-4xl mx-auto">Crustica Pizza was born to redefine how the world sees vegetarian pizza. We celebrate vegetables as heroes not just toppings. Every pizza is crafted with farm-fresh produce, hand-made crusts, and 100% vegetarian ingredients.</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 lg:gap-10">
           {pillars.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1, duration: 0.8 }}
-              className="p-10 rounded-3xl bg-cream/[0.03] border border-white/5 hover:border-accent-green/20 transition-smooth group"
+              transition={{ delay: i * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="p-8 sm:p-10 rounded-[2rem] sm:rounded-[2.5rem] bg-white/[0.03] border border-white/10 hover:border-accent-green/30 transition-all duration-500 group"
             >
-              <div className="w-16 h-16 rounded-2xl bg-accent-green/10 flex items-center justify-center mb-8 border border-accent-green/20 group-hover:bg-accent-green transition-smooth">
-                <item.icon className="w-7 h-7 text-accent-green group-hover:text-cream transition-smooth" />
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl sm:rounded-2xl bg-accent-green/10 flex items-center justify-center mb-6 sm:mb-8 border border-accent-green/20 group-hover:bg-accent-green transition-all duration-500">
+                <item.icon className="w-6 h-6 sm:w-7 sm:h-7 text-accent-green group-hover:text-primary-green transition-colors duration-500" />
               </div>
-              <h3 className="text-xl font-display font-bold mb-4 text-cream">{item.title}</h3>
-              <p className="text-cream/40 text-sm leading-relaxed">{item.desc}</p>
+              <h3 className="text-xl sm:text-2xl font-display font-bold mb-4 text-white tracking-tight">{item.title}</h3>
+              <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
             </motion.div>
           ))}
         </div>
@@ -487,42 +595,55 @@ const AboutSection = () => {
 
 const MenuSection = () => {
   const categories = [
-    { name: "Artisan Sourdough", img: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&q=80&w=800", color: "from-primary-green/80" },
-    { name: "Fresh Harvest", img: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&q=80&w=800", color: "from-accent-green/80" },
-    { name: "Botanical Specials", img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800", color: "from-light-green/80" },
-    { name: "Signature Kabsa", img: "https://images.unsplash.com/photo-1567305041168-96df58f5068a?auto=format&fit=crop&q=80&w=800", color: "from-highlight-green/40" },
-    { name: "Cold Pressed", img: "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&q=80&w=800", color: "from-accent-green/60" },
+    { name: "Artisan Sourdough", img: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&q=80&w=800", color: "from-primary-green/80", span: "lg:col-span-2" },
+    { name: "Fresh Harvest", img: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&q=80&w=800", color: "from-accent-green/80", span: "lg:col-span-1" },
+    { name: "Botanical Specials", img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800", color: "from-light-green/80", span: "lg:col-span-1" },
+    { name: "Signature Panini", img: "src/Assets/combos.jpg", color: "from-primary-green/40", span: "lg:col-span-2" },
   ];
 
   return (
-    <section id="menu" className="py-32 px-6 bg-primary-green">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+    <section id="menu" className="py-10 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-black overflow-hidden relative">
+      <div className="absolute top-0 right-0 w-[60vw] h-[60vw] bg-accent-green/5 blur-[150px] rounded-full -mr-[30vw] -mt-[30vw] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 sm:mb-20 lg:mb-24 gap-8">
           <div>
-            <h2 className="text-6xl md:text-8xl font-display font-medium tracking-tight text-cream">The Lineup</h2>
-            <p className="text-cream/30 font-mono tracking-widest mt-6 text-xs uppercase">Curated with conscience</p>
+            <motion.h2
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="text-6xl sm:text-6xl lg:text-8xl font-display font-medium tracking-tighter text-white mb-6"
+            >
+              The Lineup
+            </motion.h2>
+            <p className="text-accent-green font-mono  text-[10px] sm:text-xs">Every dish is crafted with love, fresh ingredients, and a passion for pure vegetarian excellence.</p>
           </div>
-          <Link to="/menu" className="px-10 py-4 border border-accent-green text-accent-green rounded-xl font-semibold hover:bg-accent-green hover:text-cream transition-smooth">
-            Full Menu
+          <Link to="/menu" className="group flex items-center gap-4 text-white font-bold relative pb-2 overflow-hidden">
+            <span className="text-xl sm:text-2xl tracking-tight">Full Menu</span>
+            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-accent-green group-hover:translate-x-2 transition-all duration-500" />
+            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-accent-green/30 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500" />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
           {categories.map((cat, i) => (
             <Link
               key={i}
               to="/menu"
-              className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden group cursor-pointer block"
+              className={`relative aspect-[4/5] sm:aspect-square lg:aspect-auto lg:h-[500px] rounded-[2rem] sm:rounded-[2.75rem] overflow-hidden group cursor-pointer block ${cat.span}`}
             >
               <img
                 src={cat.img}
-                className="w-full h-full object-cover transition-all duration-1000"
+                className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
                 alt={cat.name}
               />
-              <div className={`absolute inset-0 bg-gradient-to-t ${cat.color} to-transparent opacity-40 group-hover:opacity-100 transition-smooth flex flex-col justify-end p-12`} />
-              <div className="absolute inset-0 flex flex-col justify-end p-12 z-10">
-                <h3 className="text-3xl font-display font-bold text-cream tracking-tight transform translate-y-4 group-hover:translate-y-0 transition-smooth duration-700">{cat.name}</h3>
-                <p className="text-cream/70 text-sm mt-5 opacity-0 group-hover:opacity-100 transition-smooth duration-700 font-medium">Explore fresh flavor</p>
+              <div className={`absolute inset-0 bg-gradient-to-t ${cat.color} to-transparent opacity-60 transition-all duration-700 group-hover:opacity-90 flex flex-col justify-end p-8 sm:p-12`} />
+              <div className="absolute inset-0 flex flex-col justify-end p-8 sm:p-12 z-10 transition-transform duration-700 group-hover:-translate-y-4">
+                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-white tracking-tight mb-4">{cat.name}</h3>
+                <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
+                  <p className="text-white/70 text-sm sm:text-base font-medium tracking-tight">Browse Selection</p>
+                  <ArrowRight className="w-4 h-4 text-accent-green" />
+                </div>
               </div>
             </Link>
           ))}
@@ -534,26 +655,41 @@ const MenuSection = () => {
 
 const ProcessSection = () => {
   return (
-    <section className="py-40 px-6 bg-primary-green/90">
+    <section className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-primary-green relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-24">
-          <h2 className="text-4xl md:text-6xl font-display font-bold text-cream">THE ART OF <span className="text-accent-green italic font-light opacity-90">SLOW.</span></h2>
+        <div className="text-center mb-16 sm:mb-24 md:mb-32">
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-accent-green icon-[lucide--utensils] font-mono uppercase tracking-[0.4em] block mb-6 sm:mb-8 text-[1px] sm:text-xs italic font-black"
+          >
+            More Than Just Pizza
+          </motion.span>
+          <h2 className="text-5xl sm:text-7xl lg:text-[6.5rem] font-display font-black text-white tracking-tightest leading-[0.8] uppercase">
+            Your Space for <br /><span className="text-accent-green italic font-light lowercase">Good times</span>
+          </h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
+        <div className="py-10 sm:py-2 grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-3 gap-12 sm:gap-16">
           {[
-            { step: "01", title: "Select", icon: UtensilsCrossed, desc: "Browse your botanical sourdough favorites." },
-            { step: "02", title: "Prepare", icon: Leaf, desc: "Hand-stretched dough meets fresh harvest." },
-            { step: "03", title: "Stonebake", icon: ChefHat, desc: "Precision baked to a perfect artisan crunch." },
-            { step: "04", title: "Savor", icon: Zap, desc: "Delivered fresh to your table or doorstep." },
+            { step: "1", title: "Perfect for Family & Friends", icon: UtensilsCrossed, desc: "Gather your loved ones for a memorable dining experience. Our cozy seating arrangements make every meal feel like a celebration." },
+            { step: "2", title: "Team Meeting Space", icon: Leaf, desc: "Host your next team meeting in a relaxed and inspiring atmosphere. With ample space and refreshing options, it’s the perfect setting for collaboration." },
+            { step: "3", title: "Birthday Party Hosting", icon: ChefHat, desc: "Celebrate your special day with a slice of happiness! We offer dedicated party spaces and customizable menus to make your birthday unforgettable." },
           ].map((item, i) => (
-            <div key={i} className="relative p-12 rounded-[2.5rem] bg-cream/[0.02] border border-white/5 group hover:border-accent-green/20 transition-smooth overflow-hidden text-center md:text-left">
-              <span className="absolute -top-6 -right-6 text-[10rem] font-display font-bold text-cream/[0.03] group-hover:text-cream/[0.05] transition-smooth">{item.step}</span>
-              <div className="w-16 h-16 rounded-2xl bg-accent-green/10 flex items-center justify-center mb-8 mx-auto md:mx-0">
-                <item.icon className="w-8 h-8 text-accent-green" />
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              viewport={{ once: true }}
+              className="relative p-10 sm:p-12 rounded-[2.5rem] sm:rounded-[3.5rem] bg-white/[0.03] border border-white/10 group hover:border-accent-green/30 transition-all duration-500 overflow-hidden text-center lg:text-left shadow-2xl lg:hover:-translate-y-4"
+            >
+              <span className="absolute -top-12 -right-6 text-[10rem] sm:text-[12rem] font-display font-black text-white/[0.03] group-hover:text-accent-green/[0.08] transition-all duration-1000 pointer-events-none tracking-tighter">{item.step}</span>
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl sm:rounded-[2.2rem] bg-accent-green/5 flex items-center justify-center mb-10 mx-auto lg:mx-0 border border-white/5 group-hover:bg-accent-green transition-all duration-500 group-hover:shadow-[0_0_50px_rgba(118,255,3,0.3)]">
+                <item.icon className="w-10 h-10 sm:w-12 sm:h-12 text-accent-green group-hover:text-primary-green transition-colors duration-500" />
               </div>
-              <h3 className="text-2xl font-display font-bold text-cream mb-5 tracking-tight">{item.title}</h3>
-              <p className="text-cream/40 text-sm leading-relaxed">{item.desc}</p>
-            </div>
+              <h3 className="text-2xl sm:text-3xl font-display font-black text-white mb-4 sm:mb-6 tracking-tightest group-hover:text-accent-green transition-colors uppercase italic">{item.title}</h3>
+              <p className="text-white/40 text-sm sm:text-base leading-relaxed font-medium">{item.desc}</p>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -563,29 +699,50 @@ const ProcessSection = () => {
 
 const GallerySection = () => {
   return (
-    <section id="gallery" className="py-32 px-6 bg-primary-green">
+    <section id="gallery" className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-primary-green overflow-hidden">
       <div className="max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-20">
-          <h2 className="text-5xl md:text-7xl font-display font-bold text-cream tracking-tight">Gallery</h2>
-          <button className="text-accent-green font-semibold border-b border-accent-green/30 pb-2 hover:text-cream hover:border-cream transition-smooth">View More</button>
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 sm:mb-24 lg:mb-32 gap-10">
+          <motion.div
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+          >
+            <span className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 text-[10px] sm:text-xs font-black italic">Visual Chronicle</span>
+            <h2 className="text-5xl sm:text-7xl lg:text-9xl font-display font-black text-white leading-[0.85] tracking-tightest uppercase italic">The Piece <br /> <span className="text-accent-green font-light lowercase">of Art.</span></h2>
+          </motion.div>
+          <motion.button
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-white font-black px-10 py-5 rounded-[2rem] border border-white/10 hover:bg-white hover:text-primary-green transition-all duration-700 text-[10px] uppercase font-mono tracking-[0.3em] italic"
+          >
+            Explore feed
+          </motion.button>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
           {[
-            Pizza1,
-            Cheif,
-            MainEntire,
-            Interior,
-            ExteriorMain,
-            Fries,
-            Juice,
-            Billing
+            interior,
+            "https://images.unsplash.com/photo-1620374645310-f9d97e733268?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1600028068383-ea11a7a101f3?auto=format&fit=crop&q=80&w=800",
+            "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=800",
+
           ].map((src, i) => (
             <motion.div
               key={i}
-              whileHover={{ scale: 0.98 }}
-              className="aspect-[4/5] rounded-3xl overflow-hidden cursor-pointer relative"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.05, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              whileHover={{ scale: 1.05, zIndex: 10, rotate: i % 2 === 0 ? 1 : -1 }}
+              className="aspect-[4/5] rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[3rem] overflow-hidden cursor-pointer relative shadow-2xl group"
             >
-              <img src={src} className="w-full h-full object-cover transition-smooth duration-700" />
+              <img src={src} loading="lazy" className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" />
+              <div className="absolute inset-0 bg-primary-green/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
+                <Instagram className="text-white w-8 h-8 sm:w-10 sm:h-10 transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-500" link="https://www.instagram.com/crustica_pizza/" />
+              </div>
             </motion.div>
           ))}
         </div>
@@ -600,54 +757,62 @@ const OrderSection = () => {
       name: "Zomato",
       color: "bg-[#CB202D]",
       url: "https://www.zomato.com/bangalore/crustica-pizza-banaswadi-bangalore/order",
-      icon: (
-        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm0 22C6.486 22 2 17.514 2 12S6.486 2 12 2s10 4.486 10 10-4.486 10-10 10zm-3-13.5v7h1.5v-7h-1.5zm.75-1.5c.414 0 .75-.336.75-.75s-.336-.75-.75-.75-.75.336-.75.75.336.75.75.75zm3.75 3c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm1.5 7.5v-1.5h-1.5v1.5H15zm-2.25 0v-1.5H12V17h.75zm1.5-3v-1.5h-1.5V14H15zm-2.25 0v-1.5H12V14h.75z" />
-        </svg>
-      )
+      img: interior
     },
     {
       name: "Swiggy",
-      color: "bg-[#FC8019]",
+      color: "bg-[#F47006]",
       url: "https://www.swiggy.com/city/bangalore/crustica-pizzeria-kammanahalli/kalyan-nagar-kammanahalli-rest1302425",
-      icon: (
-        <svg viewBox="0 0 24 24" className="w-5 h-5 fill-current">
-          <path d="M18.528 5.4c-.23-.377-.674-.6-1.127-.6H6.6c-.453 0-.897.223-1.127.6-.23.377-.23.834 0 1.2l5.313 8.7a1.328 1.328 0 0 0 2.254 0l5.488-9c.23-.366.23-.823 0-1.2v-.7zM12 15c-.443 0-.877-.214-1.127-.6L5.56 5.7h12.879l-5.312 8.7c-.25.386-.684.6-1.127.6z" />
-        </svg>
-      )
+      image: logoSwiggy
     },
     {
       name: "Magicpin",
       color: "bg-[#6533FF]",
       url: "https://magicpin.in/walletRecharge?merchantId=57637832",
-      icon: <Zap className="w-5 h-5" />
+      icon: Star
     }
   ];
 
   return (
-    <section className="py-32 px-6 relative overflow-hidden bg-accent-green">
-      <div className="bg-primary-green py-5 flex overflow-hidden whitespace-nowrap z-50 absolute top-0 left-0 right-0">
-        <div className="flex animate-marquee-fast gap-24 font-display font-medium text-cream/40 text-xs tracking-[1em] uppercase">
+    <section className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 relative overflow-hidden bg-accent-green">
+      <div className="bg-primary-green py-4 sm:py-6 flex overflow-hidden whitespace-nowrap z-50 absolute top-0 left-0 right-0">
+        <div className="flex animate-marquee-fast gap-16 sm:gap-24 lg:gap-32 font-display font-medium text-white/20 text-[10px] sm:text-xs tracking-[1em] uppercase">
           {Array(20).fill("PURE VEGETARIAN • SLOW CRAFTED • ARTISAN SOURDOUGH").map((t, i) => (
             <span key={i}>{t}</span>
           ))}
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto text-center mt-16">
-        <h2 className="text-6xl md:text-8xl font-display font-medium text-cream tracking-tighter leading-[0.9] mb-14">FRESH. NATURAL. <br className="hidden md:block" /> <span className="opacity-70">CRAFTED FOR YOU.</span></h2>
-        <div className="flex flex-wrap justify-center gap-6">
-          {platforms.map((plat) => (
-            <a
+      <div className="max-w-5xl mx-auto text-center mt-12 sm:mt-16 relative z-10 text-primary-green">
+        <motion.span
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          className="text-primary-green/40 font-mono uppercase tracking-[0.4em] block mb-8 text-[10px] sm:text-xs font-black italic"
+        >
+          Delivery Sanctuary
+        </motion.span>
+        <motion.h2
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-5xl sm:text-7xl md:text-9xl font-display font-black text-primary-green tracking-tightest leading-[0.85] mb-12 sm:mb-20 uppercase italic"
+        >
+          Fresh. <br className="sm:hidden" /> Natural. <br /> <span className="text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">Crafted for You.</span>
+        </motion.h2>
+        <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4 sm:gap-8 items-stretch sm:items-center">
+          {ORDER_PLATFORMS.map((plat) => (
+            <motion.a
               key={plat.name}
               href={plat.url}
               target="_blank"
               rel="noopener noreferrer"
-              className={`px-10 py-5 rounded-2xl ${plat.color} text-white font-bold tracking-widest shadow-xl hover:scale-105 transition-all flex items-center gap-3`}
+              whileHover={{ scale: 1.05, y: -5 }}
+              whileTap={{ scale: 0.95 }}
+              className={`px-10 sm:px-14 py-6 sm:py-8 ${plat.color} text-white rounded-[2rem] font-black tracking-[0.25em] shadow-2xl flex items-center justify-center gap-4 transition-all duration-500 text-xs sm:text-sm font-mono`}
             >
-              <div className="shrink-0">{plat.icon}</div>
+              <plat.icon size={20} />
               {plat.name.toUpperCase()}
-            </a>
+            </motion.a>
           ))}
         </div>
       </div>
@@ -657,29 +822,43 @@ const OrderSection = () => {
 
 const TestimonialsSection = () => {
   const reviews = [
-    { name: "Rahul S.", review: "The sourdough crust is exceptional. Airy, flavorful, and surprisingly light. A True artisan experience.", label: "Most Loved" },
-    { name: "Priya V.", review: "I love that everything is pure vegetarian but doesn't compromise on bold, fresh flavors. Absolute favorite.", label: "Trusted by thousands" },
-    { name: "Anish G.", review: "The texture of the fresh dough is unlike anything else. You can taste the slow-fermentation quality.", label: "Verified Review" }
+    { name: "Rahul S.", review: "The sourdough crust is exceptional. Airy, flavorful, and light. A true artisan experience.", label: "Top Critic" },
+    { name: "Priya V.", review: "Fell in love with the the confit tomato base. Pure vegetarian haven in Bangalore.", label: "Verified Foodie" },
+    { name: "Anish G.", review: "The 24h slow-fermentation quality is something you can actually taste. Perfection.", label: "Dough Master" }
   ];
 
   return (
-    <section className="py-40 px-6 bg-primary-green">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-24">
-          <h2 className="text-5xl font-display font-bold text-cream tracking-tight">KIND WORDS FROM <span className="text-accent-green italic font-light opacity-90">THE HEART.</span></h2>
+    <section className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-black">
+      <div className="max-w-8xl mx-auto">
+        <div className="text-center mb-16 sm:mb-24 md:mb-32">
+          <h2 className="text-4xl sm:text-6xl lg:text-[7vw] font-display font-medium text-white tracking-tightest mb-6 uppercase italic">Heartfelt <span className="text-accent-green font-light">Words.</span></h2>
+          <p className="text-white/900 font-mono uppercase tracking-[0.4em] text-[10px] sm:text-xs font-black">Trusted by the local soul</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
           {reviews.map((item, i) => (
-            <div key={i} className="p-12 rounded-[2.5rem] bg-cream/[0.03] border border-white/5 relative">
-              <span className="text-[10px] font-mono text-accent-green uppercase tracking-[0.3em] block mb-6">{item.label}</span>
-              <p className="text-xl font-medium leading-relaxed mb-10 text-cream/80 font-serif italic">"{item.review}"</p>
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-accent-green/20 flex items-center justify-center">
-                  <Leaf className="w-5 h-5 text-accent-green opacity-40" />
-                </div>
-                <span className="font-bold text-sm text-cream tracking-tight">{item.name}</span>
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+              className="p-8 sm:p-10 rounded-[2.5rem] sm:rounded-[3.5rem] bg-white/[0.03] border border-white/10 relative group hover:bg-white/[0.05] transition-all duration-500"
+            >
+              <div className="mb-8 text-accent-green flex items-center gap-2">
+                <Leaf size={14} />
+                <span className="text-[10px] font-mono font-black uppercase tracking-[0.3em]">{item.label}</span>
               </div>
-            </div>
+              <p className="text-xl sm:text-2xl font-display font-medium leading-relaxed mb-10 text-white tracking-tight group-hover:text-accent-green transition-colors duration-500">"{item.review}"</p>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center overflow-hidden border border-white/10 group-hover:bg-accent-green transition-all duration-500">
+                  <Leaf className="w-6 h-6 text-accent-green group-hover:text-primary-green transition-colors duration-500" />
+                </div>
+                <div>
+                  <span className="font-bold text-lg text-white tracking-tight block">{item.name}</span>
+                  <span className="text-[10px] text-accent-green font-mono uppercase tracking-[0.2em] font-black">Bangalore, IN</span>
+                </div>
+              </div>
+            </motion.div>
           ))}
         </div>
       </div>
@@ -689,29 +868,32 @@ const TestimonialsSection = () => {
 
 const ExperienceSection = () => {
   const reviews = [
-    { name: "Rahul S.", review: "Best sourdough pizza in Bangalore. Super fresh and light!", source: "Google", rating: 5 },
-    { name: "Divya K.", review: "The interiors are so cozy, perfect for a weekend hangout. The Margherita is a must-try.", source: "Instagram", rating: 5 },
-    { name: "Arjun M.", review: "Finally a 100% veg place that takes its dough seriously. 24h fermentation really shows.", source: "Google", rating: 5 },
+    { name: "Rahul S.", review: "Best sourdough pizza in Bangalore. Super fresh and light!", source: "Google Maps", rating: 4 },
+    { name: "Sneha R.", review: "Namma Ooru's pride! The Peri Peri fries are addictive.", source: "Instagram", rating: 5 },
   ];
 
   const gallery = [
-    ExteriorMain,
+    MainEntire,
+    Cheif,
     Interior,
-    Pizza1,
-    Fries
+    Billing
   ];
 
   return (
-    <section id="experience" className="py-40 px-6 bg-primary-green relative overflow-hidden">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24 items-center">
+    <section id="experience" className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-primary-green relative overflow-hidden">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 sm:gap-24 lg:gap-32 items-center">
         {/* Left: Visuals */}
-        <div className="order-2 lg:order-1">
-          <div className="grid grid-cols-2 gap-4">
+        <div className="order-1 lg:order-6">
+          <div className="grid grid-cols-2 gap-4 sm:gap-12">
             {gallery.map((img, i) => (
               <motion.div
                 key={i}
-                whileHover={{ scale: 1.02, y: -5 }}
-                className={`rounded-3xl overflow-hidden shadow-2xl relative ${i % 2 === 0 ? 'mt-8' : ''}`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                whileHover={{ scale: 1.05, y: -10, rotate: i % 2 === 0 ? 1 : -1 }}
+                className={`rounded-[2rem] sm:rounded-[3rem] overflow-hidden shadow-2xl relative ${i % 2 === 0 ? 'mt-8 sm:mt-12' : ''}`}
               >
                 <img src={img} alt="Restaurant interior" className="w-full h-full object-cover aspect-square" loading="lazy" />
               </motion.div>
@@ -721,33 +903,43 @@ const ExperienceSection = () => {
 
         {/* Right: Reviews */}
         <div className="order-1 lg:order-2">
-          <span className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 text-xs">Proof in every bite</span>
-          <h2 className="text-5xl md:text-7xl font-display font-bold text-cream leading-[1.1] mb-8">
-            EXPERIENCE <br /><span className="text-light-green italic opacity-90">THE VIBE.</span>
-          </h2>
-          <p className="text-cream/50 text-lg mb-12 max-w-lg font-light leading-relaxed">
+          <motion.span
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 sm:mb-8 text-[10px] sm:text-[16px] font-black"
+          >
+            Proof in every bite
+          </motion.span>
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="text-5xl sm:text-7xl lg:text-[6vw] font-display font-black text-white leading-[1] mb-8 sm:mb-12 tracking-tightest uppercase italic"
+          >
+            Experience <br /><span className="text-accent-green italic font-light lowercase">the Vibe.</span>
+          </motion.h2>
+          <p className="text-white/50 text-base sm:text-lg mb-8 sm:mb-12 max-w-lg font-medium text-sm leading-relaxed tracking-tight">
             From our long-fermented dough to our botanical-inspired interiors, discover why we are Bangalore's favorite 100% vegetarian sanctuary.
           </p>
 
-          <div className="flex overflow-x-auto lg:flex-col lg:overflow-visible gap-6 scrollbar-hide pb-8 lg:pb-0">
+          <div className="flex overflow-x-auto lg:flex-col lg:overflow-visible gap-6 scrollbar-hide pb-8 lg:pb-0 snap-x">
             {reviews.map((rev, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, x: 20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="min-w-[300px] lg:min-w-0 bg-white rounded-2xl p-8 shadow-xl border border-primary-green/5 group hover:border-accent-green/20 transition-all duration-300"
+                transition={{ delay: i * 0.1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+                className="min-w-[280px] sm:min-w-[250px] lg:min-w-0 bg-white/[0.03] rounded-[2rem] sm:rounded-[2.5rem] p-8 sm:p-10 border border-white/10 group hover:border-accent-green/30 transition-all duration-500 snap-center"
               >
-                <div className="flex gap-1 mb-4">
+                <div className="flex gap-1 mb-6 text-accent-green">
                   {Array(rev.rating).fill(0).map((_, i) => (
-                    <span key={i} className="text-accent-green text-lg">★</span>
+                    <span key={i} className="text-lg">★</span>
                   ))}
                 </div>
-                <p className="text-primary-green text-lg font-medium leading-relaxed mb-6 italic">"{rev.review}"</p>
+                <p className="text-white text-lg sm:text-xl font-display font-medium leading-relaxed mb-8 italic">"{rev.review}"</p>
                 <div className="flex justify-between items-center whitespace-nowrap">
-                  <span className="font-bold text-primary-green/80 text-sm">— {rev.name}</span>
-                  <span className="text-[10px] font-mono text-primary-green/30 uppercase tracking-widest">{rev.source}</span>
+                  <span className="font-black text-accent-green text-[10px] sm:text-xs uppercase tracking-widest">— {rev.name}</span>
+                  <span className="text-[10px] font-mono text-white/20 uppercase tracking-widest font-black">{rev.source}</span>
                 </div>
               </motion.div>
             ))}
@@ -760,87 +952,103 @@ const ExperienceSection = () => {
 
 const ContactSection = () => {
   return (
-    <section id="contact" className="py-40 px-6 bg-primary-green/95">
-      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-24">
+    <section id="contact" className="py-24 sm:py-32 lg:py-32 px-4 sm:px-6 md:px-8 bg-primary-green relative">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 sm:gap-24">
         <div>
-          <h2 className="text-6xl font-display font-bold text-cream leading-[1.1] mb-14 tracking-tight">VISIT OUR <br /><span className="text-accent-green">BOTANICAL HAVEN.</span></h2>
-          <div className="space-y-12">
-            <div className="flex gap-8 text-cream">
-              <div className="w-14 h-14 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center justify-center shrink-0"><MapPin className="text-accent-green w-6 h-6" /></div>
-              <div>
-                <p className="font-mono text-[10px] text-cream/30 uppercase tracking-[0.4em] mb-2">Address</p>
-                <p className="text-xl font-medium tracking-tight">AC-822, 8th E Main, Kalyan Nagar, Bangalore (Behind ibaco ice cream parlour)</p>
+          <motion.h2
+            initial={{ opacity: 0, x: -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            className="text-5xl sm:text-7xl lg:text-8xl font-display font-black text-white leading-[1] mb-12 sm:mb-20 tracking-tightest uppercase italic"
+          >
+            Visit Our <br /><span className="text-accent-green font-light lowercase">Botanical Haven.</span>
+          </motion.h2>
+
+          <div className="space-y-10 sm:space-y-14">
+            {[
+              { icon: MapPin, label: "Address", val: "AC-822, 8th E Main Rd, (Behind ibaco ice cream parlour), 1st Block, HRBR Layout, Kalyan Nagar, Bengaluru, Karnataka 560043", color: "text-accent-green" },
+              { icon: Phone, label: "Phone", val: "+91 81977 99090", color: "text-white" },
+              { icon: Mail, label: "Email", val: "crusticapizza@gmail.com", color: "text-white" },
+              { icon: Clock, label: "Hours", val: "12:00 PM - 11:00 PM", detail: "Open all days", color: "text-white" }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                className="flex gap-6 sm:gap-8 text-white"
+              >
+                <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-[1.5rem] bg-white/[0.03] border border-white/10 flex items-center justify-center shrink-0">
+                  <item.icon className={`${item.color} w-6 h-6 sm:w-7 sm:h-7`} />
+                </div>
+                <div>
+                  <p className="font-mono text-[10px] text-white/30 uppercase tracking-[0.4em] mb-3 font-black">{item.label}</p>
+                  <p className="text-lg sm:text-xl lg:text-2xl font-display font-medium tracking-tight leading-snug">{item.val}</p>
+                  {item.detail && <p className="text-xs sm:text-sm text-white/30 mt-2 italic">{item.detail}</p>}
+                </div>
+              </motion.div>
+            ))}
+
+            <div className="flex gap-6 sm:gap-8 pt-4">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-[1.5rem] bg-white/[0.03] border border-white/10 flex items-center justify-center shrink-0">
+                <MessageCircle className="text-accent-green w-6 h-6 sm:w-7 sm:h-7" />
               </div>
-            </div>
-            <div className="flex gap-8 text-cream">
-              <div className="w-14 h-14 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center justify-center shrink-0"><Phone className="text-light-green w-6 h-6" /></div>
-              <div>
-                <p className="font-mono text-[10px] text-cream/30 uppercase tracking-[0.4em] mb-2">Phone</p>
-                <p className="text-xl font-medium tracking-tight">+91 81977 99090</p>
-              </div>
-            </div>
-            <div className="flex gap-8 text-cream">
-              <div className="w-14 h-14 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center justify-center shrink-0"><Mail className="text-accent-green w-6 h-6" /></div>
-              <div>
-                <p className="font-mono text-[10px] text-cream/30 uppercase tracking-[0.4em] mb-2">Email</p>
-                <p className="text-xl font-medium tracking-tight">crusticapizza@gmail.com</p>
-              </div>
-            </div>
-            <div className="flex gap-8 text-cream">
-              <div className="w-14 h-14 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center justify-center shrink-0"><Clock className="text-light-green w-6 h-6" /></div>
-              <div>
-                <p className="font-mono text-[10px] text-cream/30 uppercase tracking-[0.4em] mb-2">Hours</p>
-                <p className="text-xl font-medium tracking-tight">11:00 AM - 10:00 PM</p>
-                <p className="text-sm opacity-50">Open all days</p>
-              </div>
-            </div>
-            <div className="flex gap-8">
-              <div className="w-14 h-14 rounded-2xl border border-white/5 bg-white/[0.02] flex items-center justify-center shrink-0"><MessageCircle className="text-accent-green w-6 h-6" /></div>
               <button
                 onClick={() => window.open("https://wa.me/918197799090", "_blank")}
-                className="px-10 py-3 bg-accent-green text-cream rounded-xl font-bold uppercase text-xs tracking-widest hover:opacity-90 transition-smooth font-sans"
+                className="px-8 sm:px-10 py-4 sm:py-5 bg-accent-green text-primary-green rounded-2xl sm:rounded-[2rem] font-black lowercase tracking-widest text-xs sm:text-sm shadow-xl hover:scale-105 active:scale-95 transition-all duration-500 font-mono"
               >
-                WhatsApp Concierge
+                WhatsApp Us
               </button>
             </div>
           </div>
         </div>
 
-        <div className="space-y-8">
-          <div className="glass-fresh p-4 rounded-[3rem] overflow-hidden aspect-video relative group">
+        <div className="space-y-8 sm:space-y-12">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            className="p-4 sm:p-4 rounded-[2.5rem] sm:rounded-[4rem] bg-white/[0.03] border border-white/10 overflow-hidden aspect-video sm:aspect-square lg:aspect-auto lg:h-[350px] relative group"
+          >
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.2796122616823!2d77.6418873!3d13.0184405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1119b48f95db%3A0xe543df65e903f6f9!2sAC-822%2C%208th%20E%20Main%20Rd%2C%20HRBR%20Layout%201st%20Block%2C%20HRBR%20Layout%2C%20Kalyan%20Nagar%2C%20Bengaluru%2C%20Karnataka%20560043!5e0!3m2!1sen!2sin!4v1713830000000!5m2!1sen!2sin"
-              className="w-full h-full rounded-[2.5rem] grayscale group-hover:grayscale-0 transition-all duration-700"
+              className="w-full h-full rounded-[2rem] sm:rounded-[3rem] grayscale group-hover:grayscale-0 transition-all duration-1000"
               style={{ border: 0 }}
               allowFullScreen={true}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             ></iframe>
-            <div className="absolute bottom-8 right-8">
+            <div className="absolute bottom-10 right-10">
               <a
-                href="https://maps.app.goo.gl/3q6Z1w6GZX9Z9Z9Z9"
+                href="https://www.google.com/maps/place/Crustica+Pizza/@13.015023,77.6439801,17z/data=!3m1!4b1!4m6!3m5!1s0x3bae17000d751a61:0xff9b662328f1524c!8m2!3d13.015023!4d77.646555!16s%2Fg%2F11yr2dfhnp?entry=ttu&g_ep=EgoyMDI2MDUxMy4wIKXMDSoASAFQAw%3D%3D"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-6 py-3 bg-cream text-primary-green rounded-xl font-bold text-xs flex items-center gap-2 hover:bg-accent-green hover:text-cream transition-smooth"
+                className="px-6 py-4 bg-white text-primary-green rounded-full font-black text-[10px] uppercase tracking-widest flex items-center gap-3 hover:bg-accent-green transition-all duration-500 shadow-2xl"
               >
-                Open in Maps <ExternalLink className="w-3 h-3" />
+                Directions <ExternalLink className="w-3 h-3" />
               </a>
             </div>
-          </div>
+          </motion.div>
 
-          <div className="glass-fresh p-12 rounded-[3rem]">
-            <form className="space-y-8 text-cream">
-              <div className="space-y-3">
-                <label className="text-[10px] font-mono text-cream/30 uppercase tracking-[0.4em]">Your Name</label>
-                <input type="text" className="w-full bg-white/[0.02] border border-white/5 rounded-2xl px-6 py-4 focus:border-accent-green outline-none transition-smooth" placeholder="Enter name" required />
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            className="p-10 sm:p-12 rounded-[2.5rem] sm:rounded-[4rem] bg-white/[0.03] border border-white/10 backdrop-blur-3xl"
+          >
+            <form className="space-y-8 sm:space-y-8 ">
+              <div className="space-y-4 ">
+                <label className="text-[14px] font-mono text-white/300 uppercase tracking-[0.2em] font-black">Your Personal </label>
+                <input type="text" className="w-full bg-white/[0.02] border border-white/10 rounded-2xl sm:rounded-[3rem] p-4 py-5 sm:py-6 focus:border-accent-green outline-none transition-all duration-500 text-white font-medium" placeholder="Full Name" required />
               </div>
-              <div className="space-y-3">
-                <label className="text-[10px] font-mono text-cream/30 uppercase tracking-[0.4em]">Message</label>
-                <textarea className="w-full bg-white/[0.02] border border-white/5 rounded-2xl px-6 py-4 focus:border-accent-green outline-none h-32 transition-smooth" placeholder="How can we help?" required />
+              <div className="space-y-4">
+                <label className="text-[14px] font-mono text-white/300 uppercase tracking-[0.2em] font-black">Email</label>
+                <input type="text" className="w-full bg-white/[0.02] border border-white/10 rounded-2xl sm:rounded-[3rem] p-4 py-5 sm:py-6 focus:border-accent-green outline-none transition-all duration-500 text-white font-medium" placeholder="Enter the email" required />
               </div>
-              <button className="w-full py-5 bg-accent-green text-cream font-bold rounded-2xl hover:bg-accent-green/80 transition-smooth shadow-lg shadow-accent-green/5">SEND MESSAGE</button>
+              <div className="space-y-4">
+                <label className="text-[14px] font-mono text-white/300 uppercase tracking-[0.2em] font-black">Message</label>
+                <textarea className="w-full bg-white/[0.02] border border-white/5 rounded-2xl sm:rounded-[2rem] px-8 py-5 sm:py-6 focus:border-accent-green outline-none h-32 sm:h-40 transition-all duration-500 text-white font-medium resize-none" placeholder="We value your voice..." required />
+              </div>
+              <button className="w-full py-6 sm:py-7 bg-accent-green text-primary-green font-black uppercase tracking-[0.3em] text-xs rounded-2xl sm:rounded-[2rem] hover:scale-[1.02] active:scale-[0.98] transition-all duration-500 shadow-2xl shadow-accent-green/20 font-mono">Send Fragment</button>
             </form>
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
@@ -849,51 +1057,69 @@ const ContactSection = () => {
 
 const Footer = () => {
   return (
-    <footer className="py-24 px-6 bg-primary-green border-t border-white/5">
-      <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-24">
-        <div className="max-w-md">
-          <div className="flex items-center mb-10">
-            <img src={LogoImage} alt="Crustica Logo" className="h-16 md:h-20 w-auto object-contain" />
+    <footer className="py-16 sm:py-24 lg:py-10 px-4 sm:px-10 md:px-16 lg:px-25 bg-black relative selection:bg-accent-green selection:text-primary-green">
+      <div className="max-w-8xl mx-auto relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 sm:gap-24 lg:gap-32 border-b border-white/5">
+          <div className="max-w-7xl">
+            <div className="flex items-center gap-3 mb-10 sm:mb-12">
+              <img src={LogoImage} alt="Crustica Logo" className="h-15 sm:h-12 lg:h-14 w-auto object-contain scale-110" />
+            </div>
+            <p className="text-white/40 text-lg sm:text-xl mb-12 sm:mb-16 leading-relaxed font-medium tracking-tight">
+              Redefining the vegetarian experience through 24h slow-fermented artisan sourdough. Pure veg, pure craft, pure Bangalore.
+            </p>
+            <div className="flex gap-2 sm:gap-4">
+              {[Instagram, Facebook].map((Icon, i) => (
+                <motion.a
+                  key={i}
+                  whileHover={{ scale: 1.2, color: "#76FF03" }}
+                  href="https://www.instagram.com/crustica_pizza/"
+                  className="text-white/70 transition-all duration-500"
+                >
+                  <Icon className="w-7 h-7" />
+                </motion.a>
+              ))}
+            </div>
           </div>
-          <p className="text-cream/30 text-sm mb-12 leading-relaxed lowercase">
-            Crustica Pizza was born to redefine how the world sees vegetarian pizza. Pure veg, pure taste — that's our promise.
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-12 sm:gap-16 lg:gap-20">
+            <div className="flex flex-col gap-8">
+              <span className="text-accent-green font-mono uppercase tracking-[0.4em] mb-4 text-[10px] font-black italic">Directory</span>
+              <div className="flex flex-col gap-5 text-white/40 font-bold uppercase tracking-widest text-[10px]">
+                {["About", "Menu", "Gallery", "Visit Us", "Contact"].map((link) => (
+                  <Link key={link} to={`/#${link.toLowerCase().replace(' ', '')}`} className="hover:text-white transition-all duration-500 hover:translate-x-2">
+                    {link}
+                  </Link>
+                ))}
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-8 col-span-2 sm:col-span-1">
+              <span className="text-accent-green font-mono uppercase tracking-[0.4em] mb-4 text-[10px] font-black italic">The Sanctuary</span>
+              <div className="space-y-8 text-white/50 text-sm font-medium leading-relaxed tracking-tight">
+                <p>AC-822, 8th E Main Rd, 1st Block, HRBR Layout, Kalyan Nagar, Bengaluru, Karnataka 560043 <br /> <span className="text-[10px] text-accent-green/70 uppercase font-black font-mono tracking-widest mt-2 block">(Behind ibaco ice cream parlour)</span></p>
+                <p className="text-[17px] text-white tracking-tightest">+91 81977 99090</p>
+              </div>
+            </div>
+
+            <div className="flex flex-col gap-8 col-span-2 sm:col-span-1">
+              <span className="text-accent-green font-mono uppercase tracking-[0.4em] mb-4 text-[10px] font-black italic">The Oven</span>
+              <div className="space-y-6">
+                <div className="flex justify-between items-center text-white/40 border-b border-white/5 pb-4">
+                  <p className="text-[16px] font-mono uppercase font-black">Mon - Sun <br /> <span className="text-[10px] text-accent-green/70 uppercase font-black font-mono tracking-widest mt-2 block">(11AM - 11PM)</span> </p>
+                </div>
+                <p className="text-yellow-400 text-[12px] font-mono leading-loose underline underline-offset-8 decoration-2 decoration-yellow-400/50">Designed by <span className="cursor-pointer" onClick={() => window.open('https://manveltech.netlify.app/', '_blank')}>Manvel</span></p>
+              </div>
+            </div>
+          </div>
+          <p className="font-mono text-[9px] sm:text-[10px] text-white/60 uppercase  font-black md:text-left leading-relaxed">
+            © 2026 Crustica Pizza. All Rights Reserved.
           </p>
-          <p className="text-cream/80 font-serif italic text-xl mb-12">"For the Love of Veg"</p>
-          <div className="flex gap-8">
-            <Instagram className="w-5 h-5 text-cream/20 hover:text-accent-green transition-smooth cursor-pointer" onClick={() => window.open("https://instagram.com/crusticapizza_", "_blank")} />
-            <Facebook className="w-5 h-5 text-cream/20 hover:text-accent-green transition-smooth cursor-pointer" />
-            <Twitter className="w-5 h-5 text-cream/20 hover:text-accent-green transition-smooth cursor-pointer" />
+          <div className="flex gap-20 text-[9px] font-mono  text-white/70 tracking-[0.4em] font-black">
+            <span className="hover:text-accent-green cursor-pointer transition-all duration-500">Privacy</span>
+            <span className="hover:text-accent-green cursor-pointer transition-all duration-500">Terms</span>
+            <span className="hover:text-accent-green cursor-pointer transition-all duration-500">Legal</span>
           </div>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 text-sm font-medium tracking-tight">
-          <div className="flex flex-col gap-6 text-cream/30 italic">
-            <span className="text-cream not-italic mb-3 font-display font-bold uppercase tracking-widest">Quick Links</span>
-            <Link to="/#about" className="hover:text-accent-green transition-smooth">About</Link>
-            <Link to="/menu" className="hover:text-accent-green transition-smooth">Menu</Link>
-            <Link to="/#gallery" className="hover:text-accent-green transition-smooth">Gallery</Link>
-            <Link to="/#contact" className="hover:text-accent-green transition-smooth">Visit Us</Link>
-            <a href="#contact" className="hover:text-accent-green transition-smooth">Contact Us</a>
-          </div>
-
-          <div className="flex flex-col gap-6 text-cream/30 italic">
-            <span className="text-cream not-italic mb-3 font-display font-bold uppercase tracking-widest">Connect</span>
-            <p className="text-cream/50 not-italic">AC-822, 8th E Main, Kalyan Nagar, Bangalore (Behind ibaco ice cream parlour)</p>
-            <p className="text-cream/50 not-italic">+91 8197799090</p>
-            <p className="text-cream/50 not-italic">crusticapizza@gmail.com</p>
-            <a href="https://instagram.com/crusticapizza_" target="_blank" className="hover:text-accent-green transition-smooth not-italic text-accent-green opacity-100 font-mono">@crusticapizza_</a>
-          </div>
-
-          <div className="flex flex-col gap-6 text-cream/30 italic font-mono">
-            <span className="text-cream not-italic mb-3 font-display font-bold font-sans tracking-tight uppercase tracking-widest">Opening</span>
-            <p>Daily</p>
-            <p className="text-accent-green font-bold">11AM - 10PM</p>
-          </div>
-        </div>
-      </div>
-      <div className="mt-24 pt-12 border-t border-white/5 flex flex-col md:flex-row">
-        <p className="font-mono text-[10px] text-cream/10 uppercase tracking-[0.5em]">© 2026 Crustica Pizza. All rights reserved.</p>
-        <p className="text-[10px] opacity-30 mt-10 tracking-widest">Designed by Manvel</p>
       </div>
     </footer>
   );
@@ -921,7 +1147,6 @@ const HomePage = () => (
     <TestimonialsSection />
     <ExperienceSection />
     <ContactSection />
-    <Footer />
   </>
 );
 
@@ -930,244 +1155,434 @@ const MenuPage = () => {
   const [pizzaSizes, setPizzaSizes] = useState<Record<string, "reg" | "lg">>({});
   const [isOrderModalOpen, setIsOrderModalOpen] = useState(false);
 
-  const toggleSize = (itemName: string) => {
-    setPizzaSizes(prev => ({
-      ...prev,
-      [itemName]: prev[itemName] === "lg" ? "reg" : "lg"
-    }));
-  };
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
-    <div className="pt-24 bg-primary-green min-h-screen">
+    <div className="bg-primary-green min-h-screen selection:bg-accent-green selection:text-primary-green">
       <OrderModal isOpen={isOrderModalOpen} onClose={() => setIsOrderModalOpen(false)} />
 
       {/* Menu Header */}
-      <div className="max-w-7xl mx-auto px-6 pt-20 pb-12">
-        <span className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 text-xs">Curated with conscience</span>
-        <h1 className="text-6xl md:text-8xl font-display font-bold text-cream mb-8 tracking-tighter">
-          THE <span className="text-light-green italic">Sourdough</span> LINEUP.
-        </h1>
-        <p className="text-cream/40 text-xl font-light max-w-2xl leading-relaxed">
-          Explore our artisan 100% vegetarian menu, featuring 24h slow-fermented sourdough pizza and botanical garden fresh favorites.
-        </p>
+      <div className="relative pt-32 sm:pt-40 pb-20 sm:pb-10 overflow-hidden bg-black">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,_rgba(118,255,3,0.15),_transparent_70%)]" />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+          <motion.span
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 sm:mb-8 text-[10px] sm:text-[15px] font-black"
+          >
+            Curated with conscience
+          </motion.span>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
+            className="text-4xl sm:text-4xl lg:text-[6vw] font-display font-black text-white mb-8 sm:mb-10 tracking-tightest leading-[0.85] uppercase italic"
+          >
+            The <span className="text-accent-green font-light lowercase">Sourdough</span> Lineup.
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.6 }}
+            transition={{ delay: 0.3, duration: 1 }}
+            className="text-white text-base sm:text-lg lg:text-base font-medium max-w-xxl leading-relaxed tracking-tight"
+          >
+            Explore our artisan 100% vegetarian menu, featuring 24h slow-fermented crusts and garden-fresh specials.
+          </motion.p>
+        </div>
       </div>
 
       {/* Category Tabs */}
-      <div className="sticky top-[72px] z-40 bg-primary-green/95 backdrop-blur-md border-b border-white/5">
-        <div className="max-w-7xl mx-auto overflow-x-auto scrollbar-hide py-5 px-6 flex items-center gap-12">
-          {menuData.map((cat) => (
-            <button
-              key={cat.id}
-              onClick={() => {
-                setActiveCategory(cat.id);
-                const el = document.getElementById(cat.id);
-                if (el) {
-                  const offset = 140;
-                  const bodyRect = document.body.getBoundingClientRect().top;
-                  const elementRect = el.getBoundingClientRect().top;
-                  const elementPosition = elementRect - bodyRect;
-                  const offsetPosition = elementPosition - offset;
-                  window.scrollTo({
-                    top: offsetPosition,
-                    behavior: "smooth"
+      <div className="relative z-40 bg-black/60 backdrop-blur-3xl border-y border-white/5 py-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
+
+
+          {/* Top Row */}
+          <div className="flex items-center justify-between gap-4 mb-5">
+
+            {/* Search */}
+            <div className="relative w-full max-w-sm">
+              <input
+                type="text"
+                placeholder="Search menu..."
+                className="w-full h-12 rounded-full bg-white/5 border border-white/10 pl-12 pr-4 text-sm text-white placeholder:text-white/30 outline-none focus:border-accent-green transition-all duration-300"
+              />
+
+              {/* Search Icon */}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
+
+            {/* Desktop Arrows */}
+            <div className="hidden md:flex items-center gap-3">
+              <button
+                onClick={() => {
+                  document.getElementById("category-scroll")?.scrollBy({
+                    left: -300,
+                    behavior: "smooth",
                   });
-                }
-              }}
-              className={`whitespace-nowrap font-display font-bold text-sm tracking-widest uppercase transition-all ${activeCategory === cat.id ? "text-accent-green scale-110" : "text-cream/40 hover:text-cream"
-                }`}
-            >
-              {cat.name}
-            </button>
-          ))}
+                }}
+                className="w-11 h-11 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 flex items-center justify-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M15 19l-7-7 7-7"
+                  />
+                </svg>
+              </button>
+
+              <button
+                onClick={() => {
+                  document.getElementById("category-scroll")?.scrollBy({
+                    left: 300,
+                    behavior: "smooth",
+                  });
+                }}
+                className="w-11 h-11 rounded-full border border-white/10 bg-white/5 hover:bg-accent-green hover:text-black transition-all duration-300 flex items-center justify-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M9 5l7 7-7 7"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          {/* Scrollable Categories */}
+          <div
+            id="category-scroll"
+            className="flex items-center gap-8 overflow-x-auto scrollbar-hide scroll-smooth"
+          >
+            {menuData.map((cat) => (
+              <button
+                key={cat.id}
+                onClick={() => {
+                  setActiveCategory(cat.id);
+
+                  const el = document.getElementById(cat.id);
+
+                  if (el) {
+                    const offset = 180;
+                    const bodyRect = document.body.getBoundingClientRect().top;
+                    const elementRect = el.getBoundingClientRect().top;
+                    const elementPosition = elementRect - bodyRect;
+                    const offsetPosition = elementPosition - offset;
+
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: "smooth",
+                    });
+                  }
+                }}
+                className={`flex-shrink-0 px-8 py-4 rounded-full font-display font-black text-[12px] uppercase tracking-wider transition-all duration-500 border whitespace-nowrap ${activeCategory === cat.id
+                  ? "bg-accent-green text-black border-accent-green shadow-[0_0_30px_rgba(118,255,3,0.3)]"
+                  : "bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:text-white"
+                  }`}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+
+          {/* Mobile Bottom Scroll Hint */}
+          <div className="md:hidden flex items-center justify-center mt-4">
+            <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-white/30">
+              <span>Swipe for more</span>
+
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-4 h-4"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                strokeWidth={2}
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-4 md:px-4 lg:px-4 xl:px-4 2xl:px-4 pt-20 sm:pt-10">
+        {/* Featured Menu Items */}
         {menuData.map((category) => (
-          <div key={category.id} id={category.id} className="mb-32 last:mb-0 scroll-mt-40">
-            <h2 className="text-4xl md:text-5xl font-display font-bold text-cream mb-16 tracking-tight flex items-center gap-6">
-              {category.name}
-              <div className="h-px flex-1 bg-white/10" />
-            </h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div key={category.id} id={category.id} className="mb-24 sm:mb-40 last:mb-0 scroll-mt-48 sm:scroll-mt-64">
+            <div className="flex items-center gap-6 sm:gap-10 mb-12 sm:mb-20">
+              <h2 className="text-3xl sm:text-5xl lg:text-5xl font-display font-black text-white tracking-tightests uppercase italic">{category.name}</h2>
+              <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-accent-green/40 to-transparent my-10" />
+            </div>
+              
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16">
               {category.items.map((item, idx) => (
                 <motion.div
                   key={idx}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 40 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  className="bg-white rounded-[2.5rem] flex flex-col justify-between group hover:shadow-2xl hover:shadow-accent-green/5 transition-all duration-500 border border-transparent hover:border-accent-green/10 overflow-hidden"
-                >
-                  {item.image && (
-                    <div className="w-full h-56 overflow-hidden shrink-0">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
-                    </div>
-                  )}
-                  <div className="p-8 md:p-10 flex flex-col justify-between flex-1">
-                    <div>
-                      <div className="flex justify-between items-start gap-4 mb-6">
-                        <h3 className="text-2xl font-display font-bold text-primary-green leading-tight group-hover:text-accent-green transition-colors">{item.name}</h3>
-                        {item.tag && (
-                          <span className="px-3 py-1 bg-accent-green text-cream text-[10px] font-bold uppercase tracking-wider rounded-lg shadow-sm shrink-0 whitespace-nowrap">
-                            {item.tag}
-                          </span>
-                        )}
-                      </div>
-                      <p className="text-primary-green/40 text-sm mb-10 leading-relaxed min-h-[3rem] font-medium">
-                        {item.description || "Crafted with local ingredients and artisan passion."}
-                      </p>
-                    </div>
+                  viewport={{ once: true, margin: "-100px" }}
+                  transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: (idx % 3) * 0.1 }}
+                  className="group relative flex flex-col bg-gradient-to-br from-[#0b1408]/90 via-black/80 to-[#11210d]/90 backdrop-blur-2xl border border-[#76ff03]/10 rounded-[32px] p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[#76ff03]/30 hover:bg-[#0f1d0c]/90 hover:shadow-[0_30px_80px_rgba(118,255,3,0.12)]"                
+                  >
+                  {/* Info Section */}
+                  <div className="flex-1 flex flex-col h-full">
+                    <h3 className="text-2xl sm:text-3xl font-display font-black text-white italic tracking-tightest uppercase mb-4 group-hover:text-accent-green transition-colors leading-[0.9]">
+                      {item.name}
+                    </h3>
 
-                    <div className="space-y-6">
-                      {/* Pizza Size Logic */}
-                      {typeof item.price === "object" && 'reg' in item.price ? (
-                        <div className="flex flex-col gap-4">
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center bg-primary-green/5 p-1.5 rounded-2xl w-full max-w-[200px]">
-                              <button
-                                onClick={() => setPizzaSizes(prev => ({ ...prev, [item.name]: "reg" }))}
-                                className={`flex-1 py-2.5 rounded-xl text-[10px] font-black transition-all ${(pizzaSizes[item.name] || "reg") === "reg" ? "bg-accent-green text-cream shadow-lg" : "text-primary-green/40 hover:text-primary-green"
-                                  }`}
-                              >
-                                8" REG
-                              </button>
-                              <button
-                                onClick={() => setPizzaSizes(prev => ({ ...prev, [item.name]: "lg" }))}
-                                className={`flex-1 py-2.5 rounded-xl text-[10px] font-black transition-all ${pizzaSizes[item.name] === "lg" ? "bg-accent-green text-cream shadow-lg" : "text-primary-green/40 hover:text-primary-green"
-                                  }`}
-                              >
-                                12" LG
-                              </button>
-                            </div>
-                            <div className="text-4xl font-display font-bold text-primary-green tracking-tighter">
-                              ₹{pizzaSizes[item.name] === "lg" ? item.price.lg : item.price.reg}
-                            </div>
-                          </div>
-                        </div>
-                      ) : (
-                        <div className="flex items-center justify-between">
-                          <div className="text-4xl font-display font-bold text-primary-green tracking-tighter">
-                            ₹{typeof item.price === "number" ? item.price : 0}
-                          </div>
-                          <span className="text-[10px] font-mono text-primary-green/20 uppercase tracking-widest font-bold">Standard Size</span>
-                        </div>
-                      )}
+                    <p className="text-sm text-white/40 font-medium leading-relaxed mb-8 flex-1">
+                      {item.description || ""}
+                    </p>
 
-                      <div className="w-full h-px bg-primary-green/5" />
-
-                      <div className="flex items-center justify-between">
-                        <p className="text-[10px] font-mono text-primary-green/30 uppercase tracking-[0.2em] font-bold">Chef recommended</p>
+                    {/* Size Selector */}
+                    {typeof item.price === "object" && 'reg' in item.price && (
+                      <div className="flex items-center bg-white/5 p-1 rounded-xl mb-6">
                         <button
-                          onClick={() => setIsOrderModalOpen(true)}
-                          className="w-14 h-14 rounded-2xl bg-accent-green text-cream flex items-center justify-center shadow-lg transition-all hover:scale-110 hover:shadow-accent-green/20"
+                          onClick={() => setPizzaSizes(prev => ({ ...prev, [item.name]: "reg" }))}
+                          className={`flex-1 py-2 rounded-lg text-[10px] font-black transition-all uppercase tracking-widest ${(pizzaSizes[item.name] || "reg") === "reg" ? "bg-accent-green text-primary-green shadow-lg" : "text-white/40 hover:text-white"
+                            }`}
                         >
-                          <ChevronRight className="w-8 h-8" />
+                          8"
                         </button>
+                        <button
+                          onClick={() => setPizzaSizes(prev => ({ ...prev, [item.name]: "lg" }))}
+                          className={`flex-1 py-2 rounded-lg text-[10px] font-black transition-all uppercase tracking-widest ${pizzaSizes[item.name] === "lg" ? "bg-accent-green text-primary-green shadow-lg" : "text-white/40 hover:text-white"
+                            }`}
+                        >
+                          12"
+                        </button>
+                      </div>
+                    )}
+                    {/* Price & Action */}
+                    <div className="flex items-center justify-between gap-6 pt-6 border-t border-white/5">
+                      <div className="flex flex-col">
+                        <span className="text-[12px] text-white/200 uppercase  tracking-[0.06em] font-black mb-1">
+                          {typeof item.price === "object" ? "Selected Price" : "Price"}
+                        </span>
+                        <div className="text-4xl font-display font-black text-accent-green tracking-tightest italic">
+                          <span className="text-lg mr-2">₹</span>
+                          {typeof item.price === "number" ? item.price : (pizzaSizes[item.name] === "lg" ? item.price.lg : item.price.reg)}
+                        </div>
                       </div>
                     </div>
                   </div>
+                  {/* Badge */}
+                  {item.tag && (
+                    <div className=" absolute bottom-9 right-4">
+                      <span className="flex items-center gap-2 px-4 py-2 border-yellow-400 border-2 text-yellow-400 text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">
+                        {item.tag === "Chef's Special" && <ChefHat size={12} />}
+                        {item.tag === "Spicy" && <Flame size={12} />}
+                        {item.tag === "Vegan" && <Leaf size={12} />}
+                        {item.tag}
+                      </span>
+                    </div>
+                  )}
                 </motion.div>
               ))}
+            </div>           
+          </div>
+
+        ))}
+        {/* Dynamic Add-ons */}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="bg-black border border-white/5 p-10 sm:p-16 lg:p-10 rounded-[3rem] sm:rounded-[4rem] mb-24 sm:mb-40 relative overflow-hidden group shadow-3xl"
+        >
+          <div className="absolute top-0 right-0 w-[400px] h-[400px] sm:w-[600px] sm:h-[600px] bg-accent-green/10 rounded-full blur-[120px] sm:blur-[180px] -mr-32 -mt-32 transition-colors group-hover:bg-accent-green/20" />
+          <div className="relative z-10">
+            <span className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 sm:mb-8 text-[12px] sm:text-[16px] font-black italic">The Extras</span>
+            <h3 className="text-4xl sm:text-4xl lg:text-[4vw] font-display font-black text-white mb-16 sm:mb-24 tracking-tightest uppercase italic">Enhance the <span className="text-accent-green font-light lowercase">Experience.</span></h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 lg:gap-10 mb-20">
+              {addOns.map((addon) => (
+                <div key={addon.name} className="flex justify-between items-center bg-white/[0.03] p-10 sm:p-12 rounded-[2.5rem] sm:rounded-[3rem] border border-white/5 hover:border-accent-green/20 transition-all duration-500 group/addon">
+                  <div>
+                    <span className="font-display font-black text-2xl sm:text-3xl text-white block mb-2 sm:mb-3">{addon.name}</span>
+                    <span className="text-[10px] font-mono text-white/20 uppercase tracking-widest font-black italic">Artisan Addition</span>
+                  </div>
+                  <div className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-accent-green tracking-tightest italic">₹{addon.price}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className=" border-t border-white/5">
+              <span className="text-white/200 font-mono uppercase tracking-[0.2em] block mb-6 text-center text-[16px] font-black"> Order via Platforms</span>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+                {ORDER_PLATFORMS.map((plat) => (
+                  <button
+                    key={plat.name}
+                    onClick={() => setIsOrderModalOpen(true)}
+                    className={`px-10 sm:px-14 py-6 sm:py-8 ${plat.color} text-white rounded-[2rem] font-black tracking-[0.25em] shadow-3xl hover:scale-105 active:scale-95 transition-all duration-500 flex items-center justify-center gap-4 text-xs sm:text-sm font-mono`}
+                  >
+                    <plat.icon size={18} /> {plat.name.toUpperCase()}
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
-        ))}
+        </motion.div>
 
-        {/* Add-ons Section */}
-        <div className="bg-white/5 border border-white/10 p-16 rounded-[4rem] mb-32 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-accent-green/10 rounded-full blur-[100px] -mr-32 -mt-32 transition-colors group-hover:bg-accent-green/20" />
-          <h3 className="text-3xl font-display font-bold text-cream mb-10 relative z-10">Enhance Your Experience</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 relative z-10">
-            {addOns.map((addon) => (
-              <div key={addon.name} className="flex justify-between items-center bg-primary-green/40 p-8 rounded-3xl border border-white/5 hover:border-accent-green/20 transition-all">
-                <div>
-                  <span className="font-display font-bold text-xl text-cream block mb-1">{addon.name}</span>
-                  <span className="text-[10px] font-mono text-cream/30 uppercase tracking-widest">Optional Extra</span>
-                </div>
-                <div className="text-3xl font-display font-bold text-accent-green">₹{addon.price}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Bottom CTA */}
-        <div className="text-center py-20 pb-40">
-          <h2 className="text-5xl md:text-8xl font-display font-bold text-cream mb-16 tracking-tighter">Order your favorite <br /><span className="text-accent-green">pizza now.</span></h2>
-          <div className="flex flex-wrap justify-center gap-10">
-            <button onClick={() => setIsOrderModalOpen(true)} className="px-14 py-6 bg-[#CB202D] text-white rounded-2xl font-black tracking-[0.2em] shadow-2xl hover:scale-105 transition-all">ZOMATO</button>
-            <button onClick={() => setIsOrderModalOpen(true)} className="px-14 py-6 bg-[#FC8019] text-white rounded-2xl font-black tracking-[0.2em] shadow-2xl hover:scale-105 transition-all">SWIGGY</button>
-            <button onClick={() => setIsOrderModalOpen(true)} className="px-14 py-6 bg-[#6533FF] text-white rounded-2xl font-black tracking-[0.2em] shadow-2xl hover:scale-105 transition-all">MAGICPIN</button>
-          </div>
-        </div>
       </div>
-      <Footer />
     </div>
   );
 };
 
 // --- App Entry ---
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
+
 export default function App() {
   const [loading, setLoading] = useState(true);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const cursorDotRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    const timer = setTimeout(() => setLoading(false), 1500);
 
-  if (loading) {
-    return (
-      <div className="h-screen bg-primary-green flex flex-col items-center justify-center text-center p-6">
-        <div className="relative mb-8">
-          <motion.div
-            animate={{ scale: [1, 1.1, 1], opacity: [0.5, 1, 0.5] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="w-20 h-20 bg-accent-green rounded-2xl glow-soft flex items-center justify-center"
-          >
-            <Leaf className="w-10 h-10 text-cream" />
-          </motion.div>
-        </div>
-        <h2 className="text-2xl font-mono text-cream/40 uppercase tracking-[0.5em]">Harvesting Flavor...</h2>
-      </div>
-    );
-  }
+    const moveCursor = (e: MouseEvent) => {
+      if (cursorRef.current && cursorDotRef.current) {
+        gsap.to(cursorRef.current, {
+          x: e.clientX,
+          y: e.clientY,
+          duration: 0.6,
+          ease: "power4.out"
+        });
+        gsap.set(cursorDotRef.current, {
+          x: e.clientX,
+          y: e.clientY
+        });
+      }
+    };
+
+    window.addEventListener("mousemove", moveCursor);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("mousemove", moveCursor);
+    };
+  }, []);
 
   return (
     <BrowserRouter>
-      <div className="selection:bg-accent-green selection:text-white">
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/menu" element={<MenuPage />} />
-        </Routes>
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <motion.div
+            key="loader"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
+            transition={{ duration: 0.8, ease: "circIn" }}
+            className="fixed inset-0 z-[1000] bg-[#1A3A0F] flex flex-col items-center justify-center overflow-hidden"
+          >
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(118,255,3,0.12),_transparent_70%)]" />
+            <motion.div
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ duration: 0.6, ease: "backOut" }}
+              className="flex flex-col items-center gap-10 relative z-10"
+            >
+              <Link to="/" className="shrink-0 ">
+                <img src={LogoImage} alt="Crustica Logo" className="h-20 sm:h-24 lg:h-26 w-auto object-contain scale-110" />
+              </Link>
+              <div className="text-center">
+                <h2 className="font-display font-black text-xl sm:text-2xl text-white/90 tracking-tightest uppercase mb-2">PREPARING THE OVEN..</h2>
+                <div className="w-24 h-1 bg-accent-green mx-auto rounded-full" />
+              </div>
+            </motion.div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1 }}
+            className="relative selection:bg-accent-green selection:text-primary-green antialiased"
+          >
+            {/* Custom Kinetic Cursor */}
+            <div className="hidden lg:block pointer-events-none fixed inset-0 z-[9999]">
+              <div ref={cursorRef} className="w-10 h-10 border border-accent-green/50 rounded-full -translate-x-1/2 -translate-y-1/2 mix-blend-difference" />
+              <div ref={cursorDotRef} className="w-1.5 h-1.5 bg-accent-green rounded-full fixed top-0 left-0 -translate-x-1/2 -translate-y-1/2" />
+            </div>
 
-        <style>{`
-          @keyframes marquee {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
-          }
-          .animate-marquee {
-            animation: marquee 30s linear infinite;
-          }
-          .animate-marquee-fast {
-            animation: marquee 20s linear infinite;
-          }
-          html {
-            scroll-behavior: smooth;
-          }
-          .scrollbar-hide::-webkit-scrollbar {
-            display: none;
-          }
-          .scrollbar-hide {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
-          }
-        `}</style>
-      </div>
+            <ScrollToTop />
+            <Navbar />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/menu" element={<MenuPage />} />
+            </Routes>
+            <Footer />
+
+            <style>{`
+              @keyframes marquee {
+                0% { transform: translateX(0); }
+                100% { transform: translateX(-50%); }
+              }
+              .animate-marquee {
+                animation: marquee 30s linear infinite;
+              }
+              .animate-marquee-fast {
+                animation: marquee 20s linear infinite;
+              }
+              html {
+                scroll-behavior: smooth;
+              }
+              .scrollbar-hide::-webkit-scrollbar {
+                display: none;
+              }
+              .scrollbar-hide {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+              }
+              .glass-fresh {
+                backdrop-filter: blur(16px) saturate(180%);
+                background-color: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+              }
+            `}</style>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </BrowserRouter>
   );
 }

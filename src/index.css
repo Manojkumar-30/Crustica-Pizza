@@ -1,18 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @theme {
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk", sans-serif;
+  --font-display: "Outfit", sans-serif;
   --font-mono: "JetBrains Mono", monospace;
 
   /* Premium Vegetarian Palette */
-  --color-primary-green: #2D5016;
-  --color-accent-green: #4CAF50;
-  --color-light-green: #A8D5A3;
-  --color-highlight-green: #76FF03;
+  --color-primary-green: #1A3A0F;
+  --color-accent-green: #76FF03;
+  --color-light-green: #4CAF50;
   --color-cream: #F5F5DC;
-  --color-dark-bg: #1a2313; /* Deep forest dark */
+  --color-dark-bg: #14280C;
+  --color-highlight-green: #4CAF50;
 }
 
 @layer base {
@@ -26,19 +26,52 @@
   }
 }
 
-/* Premium smooth transitions */
+:root {
+  --ease-premium: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.transition-premium {
+  transition: all 0.8s var(--ease-premium);
+}
+
+/* Kinetic GSAP Utilities */
+.hero-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(100px) skewY(10deg);
+}
+
 .transition-smooth {
-  @apply transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)];
+  @apply transition-all duration-700 ease-[cubic-bezier(0.23,1,0.32,1)];
 }
 
-/* Soft glassmorphism */
 .glass-fresh {
-  @apply backdrop-blur-md bg-white/[0.05] border border-white/10 shadow-lg shadow-black/5;
+  @apply backdrop-blur-2xl bg-white/[0.03] border border-white/5 shadow-2xl shadow-black/10;
 }
 
-/* Elegant shadow glow */
 .glow-soft {
-  box-shadow: 0 0 30px rgba(76, 175, 80, 0.15);
+  filter: drop-shadow(0 0 30px rgba(118, 255, 3, 0.2));
+}
+
+.tracking-tightest {
+  letter-spacing: -0.06em;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+.animate-marquee-fast {
+  animation: marquee 25s linear infinite;
+}
+
+.perspective-2000 {
+  perspective: 2000px;
 }
 
 

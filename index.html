@@ -3,15 +3,55 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Crustica Pizza</title>
-    <meta name="description" content="Crustica Pizza is a modern pizzeria located in Bangalore, serving authentic Italian pizzas made with fresh, locally sourced ingredients." />
-    <meta name="keywords" content="pizza, pizzeria, Italian food, Bangalore, food blog, food photography" />
-    <meta name="author" content="Manoj Kathirvelan" />
-    <link rel="icon" type="image/x-icon" href="./src/Assets/crustica-icon.png" />
+    <title>Crustica | 100% Pure Vegetarian Sourdough Pizza in Bangalore</title>
+    <meta name="description" content="Experience the finest 100% vegetarian sourdough pizza in Kalyan Nagar, Bangalore. Handcrafted with 24-hour slow-fermented dough and fresh local ingredients. Visit Crustica for an artisan botanical dining experience." />
+    <meta name="keywords" content="vegetarian pizza Bangalore, sourdough pizza Kalyan Nagar, pure veg pizzeria, artisan pizza Bangalore, healthy pizza, best pizza in Bangalore, sourdough crust, botanical restaurant Bangalore" />
+    <meta name="author" content="Crustica Pizza" />
+    <link rel="icon" type="image/png" href="/crustica-icon.png" />
+    
+    <!-- Structured Data (JSON-LD) for Local SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Restaurant",
+      "name": "Crustica Pizza",
+      "image": "https://crustica.pizza/crustica-logo.png",
+      "url": "https://crustica.pizza",
+      "telephone": "+918197799090",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "AC-822, 8th E Main, Kalyan Nagar",
+        "addressLocality": "Bangalore",
+        "postalCode": "560043",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 13.0235,
+        "longitude": 77.6391
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday",
+          "Sunday"
+        ],
+        "opens": "11:00",
+        "closes": "22:00"
+      },
+      "menu": "https://crustica.pizza/menu",
+      "servesCuisine": "Artisan Pizza, Vegetarian",
+      "priceRange": "$$"
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>
-
