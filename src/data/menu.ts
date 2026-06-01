@@ -90,12 +90,12 @@ export const menuData: MenuCategory[] = [
   },
   {
     id: "pizzas",
-    name: "Signature Pizzasd",
+    name: "Signature Pizzas",
     items: [
       { name: "Aglio-E-Olio", price: { reg: 310, lg: 495 }, tag: "Chef's Special", description: "Roasted Garlic, Veggies, Chilli Oil, Parmesan." },
       { name: "The Ember Glaze", price: { reg: 275, lg: 510 }, tag: "Veg", description: "Paneer, Veggies, BBQ Glaze, Cheese Drizzle." },
       { name: "Paneer Affumicara", price: { reg: 325, lg: 480 }, tag: "Bestseller", description: "Smoked Paneer, Peri Peri, Caramelized Onion." },
-      { name: "Crustica Farmhouse", price: { reg: 329, lg: 520 }, tag: "Bestseller", description: "EJalapeno, Onion, Sweet Corn, Green Capsicum, Tomato." },
+      { name: "Crustica Farmhouse", price: { reg: 329, lg: 520 }, tag: "Bestseller", description: "Jalapeno, Onion, Sweet Corn, Green Capsicum, Tomato." },
       { name: "Crustica Italian Lover", price: { reg: 349, lg: 619 }, tag: "Chef's Special", description: "Capsicum, Mushroom, Baby Corn, Black Olives with Extra Cheese Loaded." },
       { name: "Crustica Heaven Queen", price: { reg: 399, lg: 779 }, tag: "Veg", description: "Pineapple, Olives, Cream Cheese." },
     ]
