@@ -2,8 +2,7 @@ import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { OrderModal } from "./OrderModal";
-import heroImage from "../Assets/Hero_Pizza (1) - Copy.png";
-import heroImage2 from "../Assets/Hero_Pizza (1).png";
+import heroImage2 from "../Assets/Hero_Pizza.png";
 
 
 export const Hero = () => {

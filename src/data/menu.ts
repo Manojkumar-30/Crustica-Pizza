@@ -194,7 +194,7 @@ export const menuData: MenuCategory[] = [
       { name: "Ocean Latte", price: 250 },
       { name: "Bangalore Breeze", price: 180 },
       { name: "Mango Masala Cooler", price: 180 },
-      { name: "Mojito (Classic/Guava/Masala)", price: 160 },
+      { name: "Mojito", price: 160 },
       { name: "Chocolate Milkshake", price: 200 },
       { name: "Mango Milkshake", price: 210 },
       { name: "Strawberry Milkshake", price: 200 },
