@@ -3,13 +3,13 @@ import { UtensilsCrossed, Leaf, ChefHat } from "lucide-react";
 
 export const ProcessSection = () => {
   return (
-    <section className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-primary-green relative overflow-hidden">
+    <section className="py-16 sm:py-16 lg:py-16 px-6 sm:px-8 md:px-10 bg-primary-green relative overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16 sm:mb-24 md:mb-32">
           <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-accent-green icon-[lucide--utensils] font-mono uppercase tracking-[0.4em] block mb-6 sm:mb-8 text-[1px] sm:text-xs italic font-black"
+            className="text-accent-green font-mono uppercase block text-[18px] sm:text-xl font-black tracking-tightest mb-4 sm:mb-6"
           >
             More Than Just Pizza
           </motion.span>

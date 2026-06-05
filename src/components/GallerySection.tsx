@@ -83,7 +83,7 @@ export const GallerySection = () => {
       <div className="absolute top-20 left-0 w-72 h-72 bg-accent-green/10 blur-[140px] rounded-full" />
       <div className="absolute bottom-20 right-0 w-72 h-72 bg-accent-green/10 blur-[140px] rounded-full" />
 
-      <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 mb-14 lg:mb-24">
@@ -94,16 +94,7 @@ export const GallerySection = () => {
             viewport={{ once: true }}
           >
             <span
-              className="
-                block
-                mb-4
-                text-[11px]
-                md:text-xs
-                uppercase
-                tracking-[0.4em]
-                text-accent-green
-                font-black
-              "
+              className=" text-accent-green font-mono uppercase block text-[18px] sm:text-xl font-black tracking-tightest mb-4 sm:mb-6"
             >
               Visual Chronicle
             </span>

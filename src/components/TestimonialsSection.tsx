@@ -9,13 +9,13 @@ export const TestimonialsSection = () => {
   ];
 
   return (
-    <section className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 #aedb0d">
-      <div className="max-w-8xl mx-auto">
+    <section className="py-12 sm:py-24 lg:py-32 px-4 sm:px-6 md:px-8 #aedb0d">
+      <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16 sm:mb-24 md:mb-32">
-          <h2 className="text-4xl sm:text-6xl lg:text-[8vw] font-display font-medium text-white tracking-tightest mb-6 uppercase italic">Heartfelt <span className="text-accent-green font-light">Words.</span></h2>
-          <p className="text-white/900 font-mono uppercase tracking-[0.4em] text-[14px] sm:text-md font-black">Trusted by the local soul</p>
+          <p className="text-accent-green font-mono uppercase block text-[18px] sm:text-xl font-black tracking-tightest">Trusted by the local soul</p>
+          <h2 className="text-4xl sm:text-6xl lg:text-[6vw] font-display font-medium text-white tracking-tightest mb-2 uppercase italic">Heartfelt <span className="text-accent-green font-light">Words.</span></h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10">
           {reviews.map((item, i) => (
             <motion.div
               key={i}
@@ -25,7 +25,7 @@ export const TestimonialsSection = () => {
               transition={{ delay: i * 0.1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
               className="p-8 sm:p-10 rounded-[2.5rem] sm:rounded-[3.5rem] bg-white/[0.03] border border-white/10 relative group hover:bg-white/[0.05] transition-all duration-500"
             >
-              <div className="mb-8 text-accent-green flex items-center gap-2">
+              <div className="mb-6 text-accent-green flex items-center gap-2">
                 <Leaf size={14} />
                 <span className="text-[10px] font-mono font-black uppercase tracking-[0.3em]">{item.label}</span>
               </div>

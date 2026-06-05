@@ -15,11 +15,11 @@ export const OrderSection = () => {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto text-center mt-12 sm:mt-16 relative z-10 text-primary-green">
+      <div className="max-w-6xl mx-auto text-center relative z-20 text-primary-green">
         <motion.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="text-primary-green/80 font-mono uppercase tracking-[0.4em] block mb-8 text-[10px] sm:text-lg font-black italic"
+          className="text-primary-green font-mono uppercase block text-[18px] sm:text-xl font-black tracking-tightest mb-4 sm:mb-6"
         >
           Delivery Sanctuary
         </motion.span>
@@ -27,7 +27,7 @@ export const OrderSection = () => {
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="text-5xl sm:text-7xl md:text-9xl font-display font-black text-primary-green tracking-tightest leading-[0.85] mb-12 sm:mb-20 uppercase italic"
+          className="text-5xl sm:text-7xl md:text-9xl font-display font-black text-black/60 tracking-tightest leading-[0.85] mb-12 sm:mb-20 uppercase italic"
         >
           Fresh. <br className="sm:hidden" /> Natural. <br /> <span className="text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.3)]">Crafted for You.</span>
         </motion.h2>

@@ -42,30 +42,38 @@ export const MenuSection = () => {
       <div className="max-w-7xl mx-auto relative z-10">
         
         {/* Header Section */}
-        <div className="flex flex-col lg:flex-row justify-between gap-10 mb-14">
+        <div className="flex flex-col lg:flex-row justify-between gap-10 mb-8">
           <div>
-            <h2 className="text-6xl md:text-8xl lg:text-9xl font-display font-black text-white">
+             <motion.span
+            initial={{ opacity: 0, letterSpacing: "1em" }}
+            whileInView={{ opacity: 1, letterSpacing: "0.5em" }}
+            className="text-accent-green font-mono uppercase block text-[18px] sm:text-xl font-black tracking-tightest mb-4 sm:mb-6"
+          >
+            Menu
+          </motion.span>
+            <h2 className="text-7xl sm:text-7xl lg:text-[8rem] font-display font-black text-white tracking-tightest leading-[0.8] uppercase">
               THE LINEUP
             </h2>
+            
             <div className="flex flex-wrap gap-6 mt-4 ">
-              <span className="text-accent-green text-md tracking-[0.25em] uppercase">
-                40+ Menu Items
+              <span className="text-accent-green font-mono uppercase block  text-[18px] sm:text-xl font-black">
+                40+ Menu Items -
               </span>
-              <span className="text-accent-green text-md tracking-[0.25em] uppercase">
-                100% Veg
+              <span className="text-accent-green font-mono uppercase block  text-[18px] sm:text-xl font-black">
+                100% Veg - 
               </span>
-              <span className="text-accent-green text-md tracking-[0.25em] uppercase">
-                24H Fermented Dough
+              <span className="text-accent-green font-mono uppercase block text-[18px] sm:text-xl font-black">
+                24H Fermented Dough -
               </span>
             </div>
           </div>
-          <p className="max-w-md text-white/90 italic text-sm leading-relaxed mt-16">
+          <p className="max-w-md text-white/90 italic text-sm leading-relaxed mt-10">
             Crafted with seasonal heritage grains and garden produce sourced from local regenerative farms.
           </p>
         </div>
 
         {/* Feature Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-16">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-14">
           {categories.map((cat, i) => (
             <Link
               key={i}

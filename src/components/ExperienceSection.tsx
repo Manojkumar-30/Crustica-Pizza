@@ -19,7 +19,7 @@ export const ExperienceSection = () => {
   ];
 
   return (
-    <section id="experience" className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-primary-green relative overflow-hidden">
+    <section id="experience" className=" px-4 sm:px-6 md:px-8 bg-primary-green relative overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 sm:gap-24 lg:gap-32 items-center">
         {/* Left: Visuals */}
         <div className="order-1 lg:order-6">
@@ -45,7 +45,7 @@ export const ExperienceSection = () => {
           <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 sm:mb-8 text-[10px] sm:text-[16px] font-black"
+            className="text-accent-green font-mono uppercase block text-[18px] sm:text-xl font-black tracking-tightest mb-4 sm:mb-6"
           >
             Proof in every bite
           </motion.span>
