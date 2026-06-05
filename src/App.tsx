@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Import components
-import LogoImage from "./Assets/crustica-logo.png";
+import LogoImage from "../src/assets/crustica-logo-love.png";
 import { KineticCursor } from "./components/KineticCursor";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Navbar } from "./components/Navbar";
@@ -34,9 +34,9 @@ export default function App() {
             initial={{ opacity: 1 }}
             exit={{ opacity: 0, scale: 1.1, filter: "blur(20px)" }}
             transition={{ duration: 0.8, ease: "circIn" }}
-            className="fixed inset-0 z-[1000] bg-[#357a26] flex flex-col items-center justify-center overflow-hidden"
+            className="fixed inset-0 z-[1000] bg-[#46a738] flex flex-col items-center justify-center overflow-hidden"
           >
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(174,219,13,0.12),_transparent_70%)]" />
+            <div className="absolute inset-0 _transparent_70%)]" />
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -47,8 +47,8 @@ export default function App() {
                 <img src={LogoImage} alt="Crustica Logo" className="h-20 sm:h-24 lg:h-26 w-auto object-contain scale-110 " />
               </div>
               <div className="text-center">
-                <h2 className="font-display font-black text-xl sm:text-2xl text-white/90 tracking-tightest uppercase mb-2">PREPARING THE OVEN..</h2>
-                <div className="w-24 h-1 bg-accent-green mx-auto rounded-full" />
+                <h2 className="font-mono font-bold text-lg sm:text-3xl text-black/90 tracking-tightest uppercase mb-6 pt-4">PREPARING THE OVEN...</h2>
+                <div className="w-24 h-2 bg-accent-green mx-auto rounded-full" />
               </div>
             </motion.div>
           </motion.div>

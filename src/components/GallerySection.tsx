@@ -1,57 +1,330 @@
 import { motion } from "framer-motion";
-import { Instagram } from "lucide-react";
-import interior from "../Assets/Influencer-1.png";
+import {Instagram, Youtube, Facebook, ArrowUpRight,} from "lucide-react";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+import "swiper/css";
+
+import post1 from "../Assets/Influencer-1.png";
+import post2 from "../Assets/Youtube_review1.png";
+import post3 from "../Assets/Facebook _review 1.png";
+import post4 from "../Assets/Instagram_review2.png";
+import post5 from "../Assets/Instagram_review3.png";
+import post6 from "../Assets/Instagram_review4.png";
+
+
+const socialPosts = [
+  {
+    platform: "instagram",
+    image: post1,
+    link: "https://www.instagram.com/reel/DUVR4HHkZiT/?utm_source=ig_web_button_share_sheet&igsh=MzRlODBiNWFlZA==",
+  },
+
+  {
+    platform: "youtube",
+    image: post2,
+    link: "https://youtube.com/shorts/CgLx3XYzJKQ?si=jAaL-UYGnLAhdnKG",
+  },
+
+  {
+    platform: "facebook",
+    image: post3,
+    link: "https://www.facebook.com/watch/?v=1339339987968993",
+  },
+
+  {
+    platform: "instagram",
+    image: post4,
+    link: "https://www.instagram.com/reel/DTvFN-kEt6q/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+  },
+
+  {
+    platform: "instagram",
+    image: post5,
+    link: "https://www.instagram.com/reel/DYblqqeyi4n/?utm_source=ig_web_copy_link&igsh=MzRlODBiNWFlZA==",
+  },
+   {
+    platform: "instagram",
+    image: post6,
+    link: "https://www.instagram.com/reel/DT0H2yPE3Eo/?utm_source=ig_web_copy_link&igsh=NTc4MTIwNjQ2YQ==",
+  },
+];
+
+      const getPlatformIcon = (platform: string) => {
+        switch (platform) {
+          case "instagram":
+            return <Instagram size={18} className="text-white" />;
+
+          case "youtube":
+            return <Youtube size={18} className="text-white" />;
+
+          case "facebook":
+            return <Facebook size={18} className="text-white" />;
+
+          default:
+            return <Instagram size={18} className="text-white" />;
+        }
+      };
 export const GallerySection = () => {
   return (
-    <section id="gallery" className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-primary-green overflow-hidden">
-      <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 sm:mb-24 lg:mb-32 gap-10">
+    <section
+      id="gallery"
+      className="
+        relative
+        overflow-hidden
+        bg-primary-green
+        py-20
+        md:py-28
+        lg:py-40
+      "
+    >
+      {/* Glow Effects */}
+      <div className="absolute top-20 left-0 w-72 h-72 bg-accent-green/10 blur-[140px] rounded-full" />
+      <div className="absolute bottom-20 right-0 w-72 h-72 bg-accent-green/10 blur-[140px] rounded-full" />
+
+      <div className="max-w-[1700px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+
+        {/* Header */}
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10 mb-14 lg:mb-24">
+
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 40 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <span className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 text-[10px] sm:text-xs font-black italic">Visual Chronicle</span>
-            <h2 className="text-5xl sm:text-7xl lg:text-9xl font-display font-black text-white leading-[0.85] tracking-tightest uppercase italic">The Piece <br /> <span className="text-accent-green font-light lowercase">of Art.</span></h2>
-          </motion.div>
-          <motion.button
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            className="text-white font-black px-10 py-5 rounded-[2rem] border border-white/10 hover:bg-white hover:text-primary-green transition-all duration-700 text-[10px] uppercase font-mono tracking-[0.3em] italic"
-          >
-            Explore feed
-          </motion.button>
-        </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 lg:gap-8">
-          {[
-            interior,
-            "https://images.unsplash.com/photo-1620374645310-f9d97e733268?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1594007654729-407eedc4be65?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1593560708920-61dd98c46a4e?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1600028068383-ea11a7a101f3?auto=format&fit=crop&q=80&w=800",
-            "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&q=80&w=800",
-          ].map((src, i) => (
-            <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: i * 0.05, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-              whileHover={{ scale: 1.05, zIndex: 10, rotate: i % 2 === 0 ? 1 : -1 }}
-              className="aspect-[4/5] rounded-[1.5rem] sm:rounded-[2rem] lg:rounded-[3rem] overflow-hidden cursor-pointer relative shadow-2xl group"
+            <span
+              className="
+                block
+                mb-4
+                text-[11px]
+                md:text-xs
+                uppercase
+                tracking-[0.4em]
+                text-accent-green
+                font-black
+              "
             >
-              <img src={src} loading="lazy" className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110" alt={`Gallery ${i}`} />
-              <div className="absolute inset-0 bg-primary-green/60 backdrop-blur-sm opacity-0 group-hover:opacity-100 transition-all duration-500 flex items-center justify-center">
-                <a href="https://www.instagram.com/crustica_pizza/" target="_blank" rel="noopener noreferrer">
-                  <Instagram className="text-white w-8 h-8 sm:w-10 sm:h-10 transform -translate-y-4 group-hover:translate-y-0 transition-transform duration-500" />
-                </a>
-              </div>
-            </motion.div>
-          ))}
+              Visual Chronicle
+            </span>
+
+            <h2
+              className="
+                text-white
+                leading-[0.85]
+                font-display
+                font-black
+                italic
+                uppercase
+
+                text-5xl
+                sm:text-6xl
+                md:text-7xl
+                lg:text-8xl
+                xl:text-9xl
+              "
+            >
+              THE PIECE
+              <br />
+              <span className="text-accent-green font-light lowercase">
+                of art.
+              </span>
+            </h2>
+          </motion.div>
+
+          <motion.a
+            href="https://www.instagram.com/crusticapizza_/"
+            target="_blank"
+            rel="noopener noreferrer"
+            whileHover={{ scale: 1.05 }}
+            className="
+              inline-flex
+              items-center
+              gap-3
+              px-6
+              py-4
+              rounded-full
+              bg-black/20
+              backdrop-blur-xl
+              border
+              border-white/10
+              text-white
+              font-semibold
+              hover:bg-white
+              hover:text-primary-green
+              transition-all
+            "
+          >
+            <Instagram size={18} />
+            Explore Feed
+          </motion.a>
         </div>
+
+        {/* SOCIAL WALL */}
+
+        <div className="space-y-8">
+
+          <Swiper
+            modules={[Autoplay]}
+            loop
+            speed={5000}
+            allowTouchMove
+            grabCursor
+            autoplay={{
+              delay: 0,
+              disableOnInteraction: false,
+              pauseOnMouseEnter: true,
+            }}
+            spaceBetween={16}
+            breakpoints={{
+              0: {
+                slidesPerView: 1.2,
+              },
+              480: {
+                slidesPerView: 1.5,
+              },
+              640: {
+                slidesPerView: 2.2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 4,
+              },
+              1440: {
+                slidesPerView: 5,
+              },
+            }}
+          >
+            {socialPosts.map((post, i) => (
+              <SwiperSlide key={i}>
+                <motion.a
+                  href={post.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ y: -10 }}
+                  className="
+                    group
+                    block
+                    relative
+                    overflow-hidden
+                    rounded-[24px]
+                    md:rounded-[32px]
+                    lg:rounded-[40px]
+                    aspect-[3/5]
+                    bg-black/20
+                    shadow-[0_25px_50px_rgba(0,0,0,0.25)]
+                  "
+                >
+                  <img
+                    src={post.image}
+                    alt=""
+                    className="
+                      w-full
+                      h-full
+                      object-cover
+                      transition-all
+                      duration-700
+                      group-hover:scale-110
+                    "
+                  />
+
+                  <div
+                    className="
+                      absolute
+                      inset-0
+                      bg-gradient-to-t
+                      from-black/90
+                      via-black/20
+                      to-transparent
+                    "
+                  />
+
+                  <div
+                    className="
+                      absolute
+                      top-4
+                      right-4
+                      w-11
+                      h-11
+                      rounded-full
+                      bg-black/50
+                      backdrop-blur-xl
+                      flex
+                      items-center
+                      justify-center
+                    "
+                  >
+                    {getPlatformIcon(post.platform)}
+                  </div>
+
+                  <div
+                    className="
+                      absolute
+                      bottom-0
+                      left-0
+                      right-0
+                      p-5
+                    "
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-white font-semibold text-sm">
+                          View Content
+                        </p>
+
+                        <p className="text-white/60 text-xs capitalize">
+                          {post.platform}
+                        </p>
+                      </div>
+
+                      <div
+                        className="
+                          w-10
+                          h-10
+                          rounded-full
+                          bg-accent-green
+                          flex
+                          items-center
+                          justify-center
+                        "
+                      >
+                        <ArrowUpRight
+                          size={18}
+                          className="text-black"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </motion.a>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+        {/* Mobile CTA */}
+        <div className="flex justify-center mt-10 md:hidden">
+          <a
+            href="https://www.instagram.com/crusticapizza_/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="
+              px-6
+              py-3
+              rounded-full
+              bg-accent-green
+              text-black
+              font-bold
+              flex
+              items-center
+              gap-2
+            "
+          >
+            <Instagram size={18} />
+            Follow Us
+          </a>
+        </div>
+
       </div>
     </section>
   );

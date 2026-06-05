@@ -46,7 +46,7 @@ export const Hero = () => {
 
       {/* Hyper-Dimensional Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_10%,_rgba(174,219,13,0.12),_transparent_200%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_100%_10%,_rgba(118,255,3,0.12),_transparent_200%)]" />
         <div className="absolute inset-0 bg-gradient-to-tr from-[#3fac3c] via-[#357a26] to-[#aedb0d] opacity-70" />
 
         {/* Neon Blobs */}
@@ -76,8 +76,8 @@ export const Hero = () => {
           style={{ opacity: textOpacity }}
           className="text-left w-full"
         >
-          <motion.div variants={itemVariants} className="mb-6 sm:mb-8 font-mono text-[10px] sm:text-xs font-black text-accent-green tracking-[0.5em] uppercase">
-            Bangalore's Finest Sourdough
+          <motion.div variants={itemVariants} className="mb-4 pt-5 font-mono text-[14px] sm:text-lg font-bold text-white/90 uppercase tracking-[0.0.5em] drop-shadow-[0_0_100px_#76ff03]">
+            Bangalore's Finest Sourdough 🍕✨
           </motion.div>
 
           <motion.h1
@@ -85,7 +85,7 @@ export const Hero = () => {
             className="text-[clamp(3rem,10vw,6.5rem)] font-display font-black text-white leading-[0.82] tracking-tightest uppercase mb-8 sm:mb-10"
           >
             Pure. <br />
-            <span className="text-accent-green drop-shadow-[0_0_30px_rgba(174,219,13,0.4)]">Artesanal</span> <br />
+            <span className="text-accent-green drop-shadow-[0_0_30px_rgba(118,255,3,0.4)]">Artesanal</span> <br />
             <span className="font-light italic opacity-90 lowercase tracking-tighter">Sourdough.</span>
           </motion.h1>
 
@@ -99,12 +99,12 @@ export const Hero = () => {
           <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 sm:gap-6">
             <button
               onClick={() => setIsOrderModalOpen(true)}
-              className="px-8 sm:px-12 py-4 sm:py-6 rounded-2xl sm:rounded-[2rem] bg-accent-green text-black font-black tracking-widest text-xs sm:text-sm shadow-[0_20px_50px_rgba(174,219,13,0.3)] hover:bg-accent-white hover:scale-105 active:scale-95 transition-all duration-500"
+              className="px-8 sm:px-12 py-4 cursor-pointer sm:py-6 rounded-2xl sm:rounded-[2rem] bg-accent-green text-black font-black tracking-widest text-xs sm:text-sm shadow-[0_20px_50px_rgba(118,255,3,0.3)] hover:bg-white hover:scale-105 active:scale-95 transition-all duration-500"
             >
               ORDER NOW
             </button>
             <Link to="/menu" className="w-full sm:w-auto">
-              <button className="w-full px-8 sm:px-12 py-4 sm:py-6 rounded-2xl sm:rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl text-white font-bold tracking-widest text-xs sm:text-sm hover:border-accent-green hover:text-accent-green transition-all duration-500">
+              <button className="w-full px-8 sm:px-12 py-4 cursor-pointer sm:py-6 rounded-2xl sm:rounded-[2rem] border border-white/10 bg-white/5 backdrop-blur-xl text-white font-bold tracking-widest text-xs sm:text-sm hover:border-accent-green hover:bg-black hover:scale-105 hover:text-accent-green transition-all duration-500">
                 EXPLORE MENU
               </button>
             </Link>

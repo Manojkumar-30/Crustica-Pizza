@@ -1,29 +1,33 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Utensils, Zap, Star, ArrowUpRight } from "lucide-react";
-import logoSwiggy from "../Assets/Swiggy-Logo.png";
+import logoSwiggy from "../Assets/swiggy.png";
+import logoZomato from "../Assets/zomato.png";
+import logoDistrict from "../Assets/district.png";
 
 export const ORDER_PLATFORMS = [
   {
     name: "Zomato",
     url: "https://www.zomato.com/bangalore/crustica-pizza-banaswadi-bangalore/order",
-    color: "bg-[#CB202D]",
+    color: "bg-accent-green",
     desc: "Instant delivery",
-    icon: Utensils
+    icon: Utensils,
+    img: logoZomato
   },
   {
     name: "Swiggy",
     url: "https://www.swiggy.com/city/bangalore/crustica-pizzeria-kammanahalli/kalyan-nagar-kammanahalli-rest1302425",
-    color: "bg-[#FC8019]",
+    color: "bg-accent-green",
     desc: "Fast service",
-    icon: Zap
+    icon: Zap,
+    img: logoSwiggy
   },
   {
-    name: "Magicpin",
-    url: "https://magicpin.in/walletRecharge?merchantId=57637832",
-    color: "bg-[#6533FF]",
+    name: "district",
+    url: "https://www.district.in/dining/bangalore/crustica-pizza-kalyan-nagar-bangalore",
+    color: "bg-accent-green",
     desc: "Exclusive savings",
     icon: Star,
-    img: logoSwiggy
+    img: logoDistrict
   }
 ];
 
@@ -31,13 +35,13 @@ export const OrderModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center px-4 overflow-hidden">
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center px-4 overflow-hidden ">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="absolute inset-0 bg-black/90 backdrop-blur-3xl"
+            className="absolute inset-0 bg-black/90 backdrop-blur-3xl "
           />
           <motion.div
             initial={{ y: 100, opacity: 0, scale: 0.9 }}
@@ -49,16 +53,16 @@ export const OrderModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
 
             <button
               onClick={onClose}
-              className="absolute top-8 right-8 text-white/20 hover:text-white transition-colors"
+              className="absolute cursor-pointer top-12 right-8 text-black/90 hover:bg-black/40 hover:text-accent-green transition-colors rounded-full bg-white backdrop-blur-lg p-0.5"
             >
-              <X size={24} />
+              <X size={45} />
             </button>
 
             <div className="relative z-10">
-              <span className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 text-[10px] font-black italic">Instant Order</span>
-              <h2 className="text-4xl sm:text-5xl font-display font-black text-white mb-10 tracking-tightest uppercase italic">Select <br /> <span className="text-accent-green font-light lowercase">Platform.</span></h2>
+              <span className="text-accent-green font-display uppercase text-center tracking-[0.05em] block mb-6 text-[18px] font-black ">Instant Order</span>
+              <h2 className="text-3xl sm:text-5xl font-display font-black text-white mb-10 tracking-tightest uppercase italic">Select <br /><span className="text-accent-green text-6xl italic font-bold">Platform.</span></h2>
 
-              <div className="space-y-4">
+              <div className="space-y-4  ">
                 {ORDER_PLATFORMS.map((plat) => (
                   <motion.a
                     key={plat.name}
@@ -67,24 +71,41 @@ export const OrderModal = ({ isOpen, onClose }: { isOpen: boolean; onClose: () =
                     rel="noopener noreferrer"
                     whileHover={{ scale: 1.02, x: 10 }}
                     whileTap={{ scale: 0.98 }}
-                    className={`flex items-center justify-between p-6 rounded-2xl ${plat.color} text-white group shadow-xl`}
+                    className={`flex items-center justify-between p-6 rounded-2xl ${plat.color} text-white group shadow-xl hover:bg-white/90 hover:text-black bg-primary-green transition-all duration-300 `}
                   >
                     <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center">
-                        <plat.icon size={22} />
-                      </div>
+                      <div
+                          className="
+                            w-22
+                            h-24      
+                            group-hover:scale-120
+                            transition-all
+                            duration-300
+                          "
+                        >
+                          <img
+                            src={plat.img}
+                            alt={plat.name}
+                            className="
+                              w-full
+                              h-full
+                              object-contain
+                            "
+                          />
+                        </div>
+                        
                       <div>
-                        <p className="font-black uppercase tracking-widest text-sm">{plat.name}</p>
-                        <p className="text-[10px] opacity-60 uppercase tracking-widest font-mono mt-1">{plat.desc}</p>
+                        <p className="font-semibold uppercase text-lg font-mono tracking-wider">{plat.name}</p>
+                        <p className="text-[12px] font-display text-black font-bold">{plat.desc}</p>
                       </div>
                     </div>
-                    <ArrowUpRight className="opacity-40 group-hover:opacity-100 transition-opacity" />
+                    <ArrowUpRight className=" size-10 p-2  rounded-full group-hover:opacity-140 transition-opacity rounded-full bg-black/90 " />
                   </motion.a>
                 ))}
               </div>
             </div>
 
-            <p className="mt-12 text-center text-white/10 font-mono text-[9px] uppercase tracking-[0.4em] font-black">
+            <p className="mt-9 text-center text-white/90 text-[12px]">
               Crafted with sourdough love • © 2026
             </p>
           </motion.div>

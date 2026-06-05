@@ -40,7 +40,7 @@ export const ContactSection = () => {
 
           <div className="space-y-10 sm:space-y-14">
             {[
-              { icon: MapPin, label: "Address", val: "AC-822, 8th E Main Rd, (Behind ibaco ice cream parlour), 1st Block, HRBR Layout, Kalyan Nagar, Bengaluru, Karnataka 560043", color: "text-accent-green" },
+              { icon: MapPin, label: "Address", val: "AC-822, 8th E Main Rd, (Behind ibaco ice cream parlour), 1st Block, HRBR Layout, Kalyan Nagar, Bengaluru, Karnataka 560043", color: "text-accent-green"},
               { icon: Phone, label: "Phone", val: "+91 81977 99090", color: "text-white" },
               { icon: Mail, label: "Email", val: "crusticapizza@gmail.com", color: "text-white" },
               { icon: Clock, label: "Hours", val: "12:00 PM - 11:00 PM", detail: "Open all days", color: "text-white" }
@@ -84,7 +84,7 @@ export const ContactSection = () => {
             className="p-4 sm:p-4 rounded-[2.5rem] sm:rounded-[4rem] bg-white/[0.03] border border-white/10 overflow-hidden aspect-video sm:aspect-square lg:aspect-auto lg:h-[350px] relative group"
           >
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3887.2796122616823!2d77.6418873!3d13.0184405!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1119b48f95db%3A0xe543df65e903f6f9!2sAC-822%2C%208th%20E%20Main%20Rd%2C%20HRBR%20Layout%201st%20Block%2C%20HRBR%20Layout%2C%20Kalyan%20Nagar%2C%20Bengaluru%2C%20Karnataka%20560043!5e0!3m2!1sen!2sin!4v1713830000000!5m2!1sen!2sin"
+              src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d577.8539276211192!2d77.64650590624514!3d13.015131565467179!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae17000d751a61%3A0xff9b662328f1524c!2sCrustica%20Pizza!5e0!3m2!1sen!2sin!4v1780399142018!5m2!1sen!2sin"
               className="w-full h-full rounded-[2rem] sm:rounded-[3rem] grayscale group-hover:grayscale-0 transition-all duration-1000"
               style={{ border: 0 }}
               allowFullScreen={true}

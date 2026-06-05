@@ -16,12 +16,17 @@ export const Footer = () => {
               Redefining the vegetarian experience through 24h slow-fermented artisan sourdough. Pure veg, pure craft, pure Bangalore.
             </p>
             <div className="flex gap-2 sm:gap-4">
-              {[Instagram, Facebook].map((Icon, i) => (
+              {[
+                { Icon: Instagram, href: "https://www.instagram.com/crusticapizza_/" },
+                { Icon: Facebook, href: "https://www.facebook.com/people/Crustica-pizza/61585704837699/" }
+              ].map(({ Icon, href }, i) => (
                 <motion.a
                   key={i}
                   whileHover={{ scale: 1.2, color: "#aedb0d" }}
-                  href="https://www.instagram.com/crustica_pizza/"
+                  href={href}
                   className="text-white/70 transition-all duration-500"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   <Icon className="w-7 h-7" />
                 </motion.a>

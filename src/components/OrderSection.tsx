@@ -1,12 +1,15 @@
 import { motion } from "framer-motion";
 import { ORDER_PLATFORMS } from "./OrderModal";
+import logoSwiggy from "../Assets/swiggy.png";
+import logoZomato from "../Assets/zomato.png";
+import logoDistrict from "../Assets/district.png";
 
 export const OrderSection = () => {
   return (
     <section className="py-24 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 relative overflow-hidden bg-accent-green">
-      <div className="bg-primary-green py-4 sm:py-6 flex overflow-hidden whitespace-nowrap z-50 absolute top-0 left-0 right-0">
-        <div className="flex animate-marquee-fast gap-16 sm:gap-24 lg:gap-32 font-display font-medium text-white/20 text-[10px] sm:text-xs tracking-[1em] uppercase">
-          {Array(20).fill("PURE VEGETARIAN • SLOW CRAFTED • ARTISAN SOURDOUGH").map((t, i) => (
+      <div className="bg-white py-4 sm:py-6 flex overflow-hidden whitespace-nowrap z-50 absolute top-0 left-0 right-0">
+        <div className="flex animate-marquee-fast gap-16 sm:gap-24 lg:gap-32 font-display font-medium text-black/70 text-[10px] sm:text-xs tracking-[1em] uppercase">
+          {Array(30).fill("PURE VEGETARIAN • SLOW CRAFTED • ARTISAN SOURDOUGH").map((t, i) => (
             <span key={i}>{t}</span>
           ))}
         </div>
@@ -16,7 +19,7 @@ export const OrderSection = () => {
         <motion.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="text-primary-green/40 font-mono uppercase tracking-[0.4em] block mb-8 text-[10px] sm:text-xs font-black italic"
+          className="text-primary-green/80 font-mono uppercase tracking-[0.4em] block mb-8 text-[10px] sm:text-lg font-black italic"
         >
           Delivery Sanctuary
         </motion.span>
@@ -37,10 +40,14 @@ export const OrderSection = () => {
               rel="noopener noreferrer"
               whileHover={{ scale: 1.05, y: -5 }}
               whileTap={{ scale: 0.95 }}
-              className={`px-10 sm:px-14 py-6 sm:py-8 ${plat.color} text-white rounded-[2rem] font-black tracking-[0.25em] shadow-2xl flex items-center justify-center gap-4 transition-all duration-500 text-xs sm:text-sm font-mono`}
+              className={`px-6 sm:px-8 py-2 sm:py-4 text-white/90 font-display text-3xl bg-black backdrop-blur-2xl rounded-[4rem] font-bold tracking-[0.1em] shadow-3xl flex items-center justify-center gap-2 transition-all duration-100 tracking-tightest uppercase italic hover:bg-white/90 hover:text-black`}
             >
-              <plat.icon size={20} />
-              {plat.name.toUpperCase()}
+              <img
+                src={plat.img}
+                alt={plat.name}
+                className="h-16 w-16"
+              />
+              {plat.name.toUpperCase()} 
             </motion.a>
           ))}
         </div>

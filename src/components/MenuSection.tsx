@@ -3,39 +3,69 @@ import { motion } from "framer-motion";
 import { ChevronRight, ArrowRight } from "lucide-react";
 import combosImage from "../Assets/combos.jpg";
 
-export const MenuSection = () => {
-  const categories = [
-    { name: "Artisan Sourdough", img: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&q=80&w=800", color: "from-primary-green/80", span: "lg:col-span-2" },
-    { name: "Fresh Harvest", img: "https://images.unsplash.com/photo-1541745537411-b8046dc6d66c?auto=format&fit=crop&q=80&w=800", color: "from-accent-green/80", span: "lg:col-span-1" },
-    { name: "Botanical Specials", img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&q=80&w=800", color: "from-light-green/80", span: "lg:col-span-1" },
-    { name: "Signature Panini", img: combosImage, color: "from-primary-green/40", span: "lg:col-span-2" },
-  ];
+const categories = [
+  {
+    name: "Signature Pizza",
+    subtitle: "Hand-Stretched",
+    viaGradient: "via-black/30",
+    img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
+    span: "lg:col-span-2",
+  },
+  {
+    name: "Sourdough Crusts",
+    subtitle: "Ancient Grains",
+    viaGradient: "via-black/20",
+    img: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=1200&q=80",
+    span: "lg:col-span-1",
+  },
+  {
+    name: "Panini & Appetizers",
+    subtitle: "Small Plates",
+    viaGradient: "via-black/20",
+    img: combosImage,
+    span: "lg:col-span-1",
+  },
+  {
+    name: "Combos & Specials",
+    subtitle: "Curated Pairings",
+    viaGradient: "via-black/20",
+    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80",
+    span: "lg:col-span-2",
+  },
+];
 
+export const MenuSection = () => {
   return (
     <section id="menu" className="py-10 sm:py-32 lg:py-48 px-4 sm:px-6 md:px-8 bg-gradient-to-tr from-[#3fac3c] via-[#357a26] to-[#3fac3c] overflow-hidden relative">
       <div className="absolute top-0 right-0 w-[60vw] h-[60vw] bg-accent-green/5 blur-[150px] rounded-full -mr-[30vw] -mt-[30vw] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 sm:mb-20 lg:mb-24 gap-8">
+        
+        {/* Header Section */}
+        <div className="flex flex-col lg:flex-row justify-between gap-10 mb-14">
           <div>
-            <motion.h2
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              className="text-6xl sm:text-6xl lg:text-9xl font-display font-medium tracking-tighter text-white mb-6"
-            >
-              The Lineup
-            </motion.h2>
-            <p className="text-accent-green font-mono text-[15px] sm:text-md">Every dish is crafted with love, fresh ingredients, and a passion for pure vegetarian excellence.</p>
+            <h2 className="text-6xl md:text-8xl lg:text-9xl font-display font-black text-white">
+              THE LINEUP
+            </h2>
+            <div className="flex flex-wrap gap-6 mt-4 ">
+              <span className="text-accent-green text-md tracking-[0.25em] uppercase">
+                40+ Menu Items
+              </span>
+              <span className="text-accent-green text-md tracking-[0.25em] uppercase">
+                100% Veg
+              </span>
+              <span className="text-accent-green text-md tracking-[0.25em] uppercase">
+                24H Fermented Dough
+              </span>
+            </div>
           </div>
-          <Link to="/menu" className="group flex items-center gap-4 text-white font-bold relative pb-2 overflow-hidden">
-            <span className="text-xl sm:text-2xl tracking-tight">Full Menu</span>
-            <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-accent-green group-hover:translate-x-2 transition-all duration-500" />
-            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-accent-green/30 translate-x-[-100%] group-hover:translate-x-0 transition-transform duration-500" />
-          </Link>
+          <p className="max-w-md text-white/90 italic text-sm leading-relaxed mt-16">
+            Crafted with seasonal heritage grains and garden produce sourced from local regenerative farms.
+          </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8">
+        {/* Feature Cards Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-16">
           {categories.map((cat, i) => (
             <Link
               key={i}
@@ -47,16 +77,41 @@ export const MenuSection = () => {
                 className="w-full h-full object-cover transition-all duration-1000 group-hover:scale-110"
                 alt={cat.name}
               />
-              <div className={`absolute inset-0 bg-gradient-to-t ${cat.color} to-transparent opacity-60 transition-all duration-700 group-hover:opacity-90 flex flex-col justify-end p-8 sm:p-12`} />
-              <div className="absolute inset-0 flex flex-col justify-end p-8 sm:p-12 z-10 transition-transform duration-700 group-hover:-translate-y-4">
-                <h3 className="text-3xl sm:text-4xl lg:text-5xl font-display font-black text-white tracking-tight mb-4">{cat.name}</h3>
-                <div className="flex items-center gap-3 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-4 group-hover:translate-y-0">
-                  <p className="text-white/70 text-sm sm:text-base font-medium tracking-tight">Browse Selection</p>
-                  <ArrowRight className="w-4 h-4 text-accent-green" />
-                </div>
+              <div className={`absolute inset-0 bg-gradient-to-t from-black/80 ${cat.viaGradient} to-transparent`} />
+              
+              <div className="absolute bottom-6 left-6 z-10">
+                <span className="text-[11px] uppercase tracking-[0.25em] text-accent-green font-bold">
+                  {cat.subtitle}
+                </span>
+                <h3 className="text-white text-3xl md:text-5xl font-black mt-2">
+                  {cat.name}
+                </h3>
               </div>
             </Link>
           ))}
+        </div>
+
+        {/* Bottom Call to Action */}
+        <div className="flex justify-center mt-12">
+          <Link
+            to="/menu"
+            className="
+              inline-flex
+              items-center
+              gap-4
+              px-8
+              py-5
+              rounded-full
+              bg-accent-green
+              text-black
+              font-bold
+              hover:scale-105
+              transition-all
+            "
+          >
+            Explore All 40+ Items
+            <ArrowRight />
+          </Link>
         </div>
       </div>
     </section>

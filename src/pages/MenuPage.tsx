@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { ChefHat, Flame, Leaf } from "lucide-react";
 import { menuData, addOns } from "../data/menu";
 import { OrderModal, ORDER_PLATFORMS } from "../components/OrderModal";
+import logoSwiggy from "../Assets/swiggy.png";
+import logoZomato from "../Assets/zomato.png";
+import logoDistrict from "../Assets/district.png";
 
 export const MenuPage = () => {
   const [activeCategory, setActiveCategory] = useState(menuData[0].id);
@@ -35,13 +38,13 @@ export const MenuPage = () => {
       <OrderModal isOpen={isOrderModalOpen} onClose={() => setIsOrderModalOpen(false)} />
 
       {/* Menu Header */}
-      <div className="relative pt-32 sm:pt-40 pb-20 sm:pb-10 overflow-hidden bg-black">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_-20%,_rgba(174,219,13,0.15),_transparent_70%)]" />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
+          <div className="relative pt-32 sm:pt-40 pb-20 sm:pb-10 overflow-hidden">
+          <div className="bg-gradient-to-tr from-[#3fac3c] via-[#357a26] to-[#aedb0d] opacity-70" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 relative z-10">
           <motion.span
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 sm:mb-8 text-[10px] sm:text-[15px] font-black"
+            className="text-accent-green font-mono uppercase tracking-[0.4em] block mb-6 sm:mb-8 text-[15px] sm:text-[15px] font-black"
           >
             Curated with conscience
           </motion.span>
@@ -49,7 +52,7 @@ export const MenuPage = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1, duration: 1, ease: [0.22, 1, 0.36, 1] }}
-            className="text-4xl sm:text-4xl lg:text-[6vw] font-display font-black text-white mb-8 sm:mb-10 tracking-tightest leading-[0.85] uppercase italic"
+            className="text-4xl sm:text-6xl lg:text-[6vw] font-display font-black text-white mb-8 sm:mb-10 tracking-tightest leading-[0.85] uppercase italic"
           >
             The <span className="text-accent-green font-light lowercase">Sourdough</span> Lineup.
           </motion.h1>
@@ -65,7 +68,7 @@ export const MenuPage = () => {
       </div>
 
       {/* Category Tabs */}
-      <div className="relative z-40 bg-black/60 backdrop-blur-3xl border-y border-white/5 py-6">
+      <div className="relative backdrop-blur-3xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8">
 
           {/* Top Row */}
@@ -78,13 +81,13 @@ export const MenuPage = () => {
                 placeholder="Search menu..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full h-12 rounded-full bg-white/5 border border-white/10 pl-12 pr-4 text-sm text-white placeholder:text-white/30 outline-none focus:border-accent-green transition-all duration-300"
+                className="w-full h-12 rounded-full bg-black/45 border border-white/10 pl-12 pr-4 text-sm text-white placeholder:text-white/50 outline-none focus:border-accent-green transition-all duration-300"
               />
 
               {/* Search Icon */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/70"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -107,7 +110,7 @@ export const MenuPage = () => {
                     behavior: "smooth",
                   });
                 }}
-                className="w-11 h-11 rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 flex items-center justify-center"
+                className="w-11 h-11 rounded-full border border-white/10 bg-black/50 hover:bg-white/50 transition-all duration-300 flex items-center justify-center"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -132,7 +135,7 @@ export const MenuPage = () => {
                     behavior: "smooth",
                   });
                 }}
-                className="w-11 h-11 rounded-full border border-white/10 bg-white/5 hover:bg-accent-green hover:text-black transition-all duration-300 flex items-center justify-center"
+                className="w-11 h-11 rounded-full border border-white/10 bg-black/50 hover:bg-white/50 transition-all duration-300 flex items-center justify-center"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -178,9 +181,9 @@ export const MenuPage = () => {
                     });
                   }
                 }}
-                className={`flex-shrink-0 px-8 py-4 rounded-full font-display font-black text-[12px] uppercase tracking-wider transition-all duration-500 border whitespace-nowrap ${activeCategory === cat.id
+                className={`flex-shrink-0 px-4 py-3 rounded-full font-display font-black text-[11px] uppercase tracking-wider transition-all duration-500 border whitespace-nowrap ${activeCategory === cat.id
                   ? "bg-accent-green text-black border-accent-green shadow-[0_0_30px_rgba(174,219,13,0.3)]"
-                  : "bg-white/5 text-white/40 border-white/10 hover:bg-white/10 hover:text-white"
+                  : "bg-black/50 text-white/70 border-white/10 hover:bg-white/10 hover:text-white"
                   }`}
               >
                 {cat.name}
@@ -189,7 +192,7 @@ export const MenuPage = () => {
           </div>
 
           {/* Mobile Bottom Scroll Hint */}
-          <div className="md:hidden flex items-center justify-center mt-4">
+          <div className="md:hidden flex items-center justify-center mt-7">
             <div className="flex items-center gap-2 text-[11px] uppercase tracking-[0.3em] text-white/30">
               <span>Swipe for more</span>
 
@@ -218,7 +221,7 @@ export const MenuPage = () => {
           <div key={category.id} id={category.id} className="mb-24 sm:mb-40 last:mb-0 scroll-mt-48 sm:scroll-mt-64">
             <div className="flex items-center gap-6 sm:gap-10 mb-12 sm:mb-20">
               <h2 className="text-3xl sm:text-5xl lg:text-5xl font-display font-black text-white tracking-tightests uppercase italic">{category.name}</h2>
-              <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-accent-green/40 to-transparent my-10" />
+              <div className="h-[3px] w-full bg-gradient-to-r from-transparent via-accent-green/90 to-transparent my-10" />
             </div>
               
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12 lg:gap-16">
@@ -229,31 +232,31 @@ export const MenuPage = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-100px" }}
                   transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: (idx % 3) * 0.1 }}
-                  className="group relative flex flex-col bg-gradient-to-br from-[#0b1408]/90 via-black/80 to-[#11210d]/90 backdrop-blur-2xl border border-[#aedb0d]/10 rounded-[32px] p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[#aedb0d]/30 hover:bg-[#0f1d0c]/90 hover:shadow-[0_30px_80px_rgba(174,219,13,0.12)]"                
+                  className="group relative flex flex-col bg-gradient-to-br from-[#0b1408]/60 via-black/80 to-[#11210d]/80 backdrop-blur-2xl border border-[#aedb0d]/20 rounded-[42px] p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:border-[#aedb0d]/30 hover:bg-[#0f1d0c]/80 hover:shadow-[0_30px_80px_rgba(174,219,13,0.12)]"                
                 >
                   {/* Info Section */}
                   <div className="flex-1 flex flex-col h-full">
-                    <h3 className="text-2xl sm:text-3xl font-display font-black text-white italic tracking-tightest uppercase mb-4 group-hover:text-accent-green transition-colors leading-[0.9]">
+                    <h3 className="text-3xl sm:text-3xl font-display font-black text-white uppercase mb-4 group-hover:text-accent-green transition-colors leading-[0.9]">
                       {item.name}
                     </h3>
 
-                    <p className="text-sm text-white/40 font-medium leading-relaxed mb-8 flex-1">
+                    <p className="text-[11px] text-white/60 font-light leading-relaxed mb-6 flex-1">
                       {item.description || ""}
                     </p>
 
                     {/* Size Selector */}
                     {typeof item.price === "object" && 'reg' in item.price && (
-                      <div className="flex items-center bg-white/5 p-1 rounded-xl mb-6">
+                      <div className="flex items-center bg-white/20 p-1.5 rounded-xl mb-4">
                         <button
                           onClick={() => setPizzaSizes(prev => ({ ...prev, [item.name]: "reg" }))}
-                          className={`flex-1 py-2 rounded-lg text-[10px] font-black transition-all uppercase tracking-widest ${(pizzaSizes[item.name] || "reg") === "reg" ? "bg-accent-green text-primary-green shadow-lg" : "text-white/40 hover:text-white"
+                          className={`flex-1 py-2 rounded-lg text-[10px] font-black transition-all uppercase tracking-widest ${(pizzaSizes[item.name] || "reg") === "reg" ? "bg-accent-green text-black shadow-lg " : "text-white/40 hover:text-white"
                             }`}
                         >
                           8"
                         </button>
                         <button
                           onClick={() => setPizzaSizes(prev => ({ ...prev, [item.name]: "lg" }))}
-                          className={`flex-1 py-2 rounded-lg text-[10px] font-black transition-all uppercase tracking-widest ${pizzaSizes[item.name] === "lg" ? "bg-accent-green text-primary-green shadow-lg" : "text-white/40 hover:text-white"
+                          className={`flex-1 py-2 rounded-lg text-[10px] font-black transition-all uppercase tracking-widest ${pizzaSizes[item.name] === "lg" ? "bg-accent-green text-black shadow-lg" : "text-white/40 hover:text-white"
                             }`}
                         >
                           12"
@@ -266,8 +269,8 @@ export const MenuPage = () => {
                         <span className="text-[12px] text-white/200 uppercase tracking-[0.06em] font-black mb-1">
                           {typeof item.price === "object" ? "Selected Price" : "Price"}
                         </span>
-                        <div className="text-4xl font-display font-black text-accent-green tracking-tightest italic">
-                          <span className="text-lg mr-2">₹</span>
+                        <div className="text-3xl font-display font-black text-white/95">
+                          <span className="text-md mr-2 text-white/85">₹</span>
                           {typeof item.price === "number" ? item.price : (pizzaSizes[item.name] === "lg" ? item.price.lg : item.price.reg)}
                         </div>
                       </div>
@@ -327,9 +330,14 @@ export const MenuPage = () => {
                   <button
                     key={plat.name}
                     onClick={() => setIsOrderModalOpen(true)}
-                    className={`px-10 sm:px-14 py-6 sm:py-8 ${plat.color} text-white rounded-[2rem] font-black tracking-[0.25em] shadow-3xl hover:scale-105 active:scale-95 transition-all duration-500 flex items-center justify-center gap-4 text-xs sm:text-sm font-mono`}
+                    className={` ${plat.color} cursor-pointer sm:py-3 text-black/90 font-display text-3xl bg-accent-green backdrop-blur-2xl rounded-[4rem] font-bold tracking-[0.1em] shadow-3xl flex items-center justify-center gap-2 transition-all duration-100 tracking-tightest uppercase italic hover:bg-white/90 hover:text-black`}
                   >
-                    <plat.icon size={18} /> {plat.name.toUpperCase()}
+                    <img
+                    src={plat.img}
+                    alt={plat.name}
+                    className="h-16 w-16"
+                  />
+                    {plat.name.toUpperCase()}
                   </button>
                 ))}
               </div>

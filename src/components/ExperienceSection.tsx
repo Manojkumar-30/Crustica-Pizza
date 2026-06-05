@@ -72,7 +72,7 @@ export const ExperienceSection = () => {
               >
                 <div className="flex gap-1 mb-6 text-accent-green">
                   {Array(rev.rating).fill(0).map((_, idx) => (
-                    <span key={idx} className="text-lg">★</span>
+                    <span key={idx} className="text-lg">⭐</span>
                   ))}
                 </div>
                 <p className="text-white text-lg sm:text-xl font-display font-medium leading-relaxed mb-8 italic">"{rev.review}"</p>

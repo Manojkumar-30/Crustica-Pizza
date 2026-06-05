@@ -20,10 +20,9 @@ export const HomePage = () => (
         ))}
       </div>
     </div>
-
     <MenuSection />
-    <ProcessSection />
     <GallerySection />
+    <ProcessSection />
     <OrderSection />
     <TestimonialsSection />
     <ExperienceSection />
