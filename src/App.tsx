@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Import components
-import logo from "./Assets/crustica-logo-love.png";
+import LogoImage from "./Assets/crustica-logo-love.png";
 import { KineticCursor } from "./components/KineticCursor";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Navbar } from "./components/Navbar";
@@ -36,7 +36,7 @@ export default function App() {
             transition={{ duration: 0.8, ease: "circIn" }}
             className="fixed inset-0 z-[1000] bg-[#46a738] flex flex-col items-center justify-center overflow-hidden"
           >
-            <div className="absolute inset-0 _transparent_70%)]" />
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,_rgba(174,219,13,0.12),_transparent_70%)]" />
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
