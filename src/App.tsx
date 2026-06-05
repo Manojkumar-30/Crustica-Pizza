@@ -5,7 +5,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 // Import components
-import LogoImage from "../src/assets/crustica-logo-love.png";
+import logo from "./Assets/crustica-logo-love.png";
 import { KineticCursor } from "./components/KineticCursor";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { Navbar } from "./components/Navbar";
