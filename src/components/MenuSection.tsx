@@ -4,7 +4,7 @@ import { ChevronRight, ArrowRight } from "lucide-react";
 import combosImage from "../Assets/combo.webp";
 import MenuImage from "../Assets/menu-pizza.webp";
 import drinksImage from "../Assets/Drinks.webp";
-import combosImage2 from "../Assets/Combos.webp";
+import combosImage2 from "../Assets/Specials.webp";
 
 
 const categories = [
