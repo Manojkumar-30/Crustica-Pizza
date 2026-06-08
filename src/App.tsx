@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 // Import components
 import LogoImage from "./Assets/crustica-logo-love.webp";
@@ -70,6 +71,7 @@ export default function App() {
               <Route path="/menu" element={<MenuPage />} />
             </Routes>
             <Footer />
+            <SpeedInsights />
 
             <style>{`
               @keyframes marquee {
