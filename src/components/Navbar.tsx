@@ -145,7 +145,7 @@ export const Navbar = () => {
                     setIsMobileMenuOpen(false);
                     setIsOrderModalOpen(true);
                   }}
-                  className="w-full max-w-sm py-6 rounded-[2rem] bg-accent-green text-primary-green font-black text-2xl shadow-[0_20px_50px_rgba(174, 219, 13, 0.3)] hover:scale-105 active:scale-95 transition-transform"
+                  className="w-full max-w-sm py-6 cursor-pointer hover:bg-white hover:text-black transition-all duration-300 rounded-[2rem] bg-accent-green text-primary-green font-black text-2xl shadow-[0_20px_50px_rgba(174, 219, 13, 0.3)] hover:scale-105 active:scale-95 transition-transform"
                 >
                   ORDER NOW
                 </motion.button>
@@ -156,19 +156,17 @@ export const Navbar = () => {
       </AnimatePresence>
 
       <nav
-          className={`fixed top-0 left-0 right-0 z-[120] transition-all duration-700 px-4 md:px-6 lg:px-8 py-4 ${
-            isNavVisible
-              ? "translate-y-0 opacity-100"
-              : "-translate-y-full opacity-0"
-          } ${
-            isScrolled || isMobileMenuOpen
-              ? "backdrop-blur-xl"
-              : ""
+        className={`fixed top-0 left-0 right-0 z-[120] transition-all duration-700 px-4 md:px-6 lg:px-8 py-4 ${isNavVisible
+          ? "translate-y-0 opacity-100"
+          : "-translate-y-full opacity-0"
+          } ${isScrolled || isMobileMenuOpen
+            ? "backdrop-blur-xl"
+            : ""
           }`}
-        >
+      >
         <div className="max-w-7xl mx-auto">
           <div className="h-[78px] bg-black/60 backdrop-blur-xl rounded-full px-6 lg:px-10 flex items-center justify-between shadow-[0_20px_60px_rgba(0,0,0,0.35)] border border-white/5">
-            
+
             {/* Logo */}
             <Link to="/" className="shrink-0">
               <img
@@ -200,7 +198,7 @@ export const Navbar = () => {
 
               <button
                 onClick={() => setIsOrderModalOpen(true)}
-                className="hidden sm:flex items-center justify-center h-12 px-8 rounded-full bg-accent-green text-black font-bold tracking-wider text-xs hover:scale-105 transition-all"
+                className="hidden sm:flex items-center cursor-pointer hover:bg-white hover:text-black transition-all duration-300 justify-center h-12 px-8 rounded-full bg-accent-green text-black font-bold tracking-wider text-xs hover:scale-105 transition-all"
               >
                 ORDER NOW
               </button>

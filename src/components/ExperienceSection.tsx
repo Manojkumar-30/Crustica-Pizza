@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Leaf } from "lucide-react";
 import MainEntire from "../Assets/main_entire.jpg";
-import Cheif from "../Assets/cheif.jpg";
+import Interior2 from "../Assets/interior-3.jpg";
 import Interior from "../Assets/interior.jpg";
 import Billing from "../Assets/Billing.jpg";
 
@@ -13,7 +13,7 @@ export const ExperienceSection = () => {
 
   const gallery = [
     MainEntire,
-    Cheif,
+    Interior2,
     Interior,
     Billing
   ];

@@ -15,7 +15,7 @@ export const ORDER_PLATFORMS = [
   },
   {
     name: "Swiggy",
-    url: "https://www.swiggy.com/city/bangalore/crustica-pizzeria-kammanahalli/kalyan-nagar-kammanahalli-rest1302425",
+    url: "https://www.swiggy.com/city/bangalore/crustica-pizzeria-kammanahalli-kalyan-nagar-rest1302425",
     color: "bg-accent-green",
     desc: "Fast service",
     icon: Zap,

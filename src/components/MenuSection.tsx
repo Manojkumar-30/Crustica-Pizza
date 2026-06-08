@@ -1,35 +1,39 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { ChevronRight, ArrowRight } from "lucide-react";
-import combosImage from "../Assets/combos.jpg";
+import combosImage from "../Assets/combo.png";
+import MenuImage from "../Assets/menu-pizza.png";
+import drinksImage from "../Assets/drinks.png";
+import combosImage2 from "../Assets/Combos.png";
+
 
 const categories = [
   {
     name: "Signature Pizza",
     subtitle: "Hand-Stretched",
     viaGradient: "via-black/30",
-    img: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=1200&q=80",
+    img:combosImage,
     span: "lg:col-span-2",
   },
   {
     name: "Sourdough Crusts",
     subtitle: "Ancient Grains",
     viaGradient: "via-black/20",
-    img: "https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=1200&q=80",
+    img: MenuImage,
     span: "lg:col-span-1",
   },
   {
-    name: "Panini & Appetizers",
+    name: "Drinks & Tiramisu",
     subtitle: "Small Plates",
     viaGradient: "via-black/20",
-    img: combosImage,
+    img: drinksImage,
     span: "lg:col-span-1",
   },
   {
     name: "Combos & Specials",
     subtitle: "Curated Pairings",
     viaGradient: "via-black/20",
-    img: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=1200&q=80",
+    img: combosImage2,
     span: "lg:col-span-2",
   },
 ];
