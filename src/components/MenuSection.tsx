@@ -12,7 +12,7 @@ const categories = [
     name: "Signature Pizza",
     subtitle: "Hand-Stretched",
     viaGradient: "via-black/30",
-    img:combosImage,
+    img: combosImage,
     span: "lg:col-span-2",
   },
   {
@@ -44,27 +44,27 @@ export const MenuSection = () => {
       <div className="absolute top-0 right-0 w-[60vw] h-[60vw] bg-accent-green/5 blur-[150px] rounded-full -mr-[30vw] -mt-[30vw] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto relative z-10">
-        
+
         {/* Header Section */}
         <div className="flex flex-col lg:flex-row justify-between gap-10 mb-8">
           <div>
-             <motion.span
-            initial={{ opacity: 0, letterSpacing: "1em" }}
-            whileInView={{ opacity: 1, letterSpacing: "0.5em" }}
-            className="text-accent-green font-mono uppercase block text-[18px] sm:text-xl font-black tracking-tightest mb-4 sm:mb-6"
-          >
-            Menu
-          </motion.span>
+            <motion.span
+              initial={{ opacity: 0, letterSpacing: "1em" }}
+              whileInView={{ opacity: 1, letterSpacing: "0.5em" }}
+              className="text-accent-green font-mono uppercase block text-[18px] sm:text-xl font-black tracking-tightest mb-4 sm:mb-6"
+            >
+              Menu
+            </motion.span>
             <h2 className="text-7xl sm:text-7xl lg:text-[8rem] font-display font-black text-white tracking-tightest leading-[0.8] uppercase">
               THE LINEUP
             </h2>
-            
+
             <div className="flex flex-wrap gap-6 mt-4 ">
               <span className="text-accent-green font-mono uppercase block  text-[18px] sm:text-xl font-black">
                 40+ Menu Items -
               </span>
               <span className="text-accent-green font-mono uppercase block  text-[18px] sm:text-xl font-black">
-                100% Veg - 
+                100% Veg -
               </span>
               <span className="text-accent-green font-mono uppercase block text-[18px] sm:text-xl font-black">
                 24H Fermented Dough -
@@ -90,7 +90,7 @@ export const MenuSection = () => {
                 alt={cat.name}
               />
               <div className={`absolute inset-0 bg-gradient-to-t from-black/80 ${cat.viaGradient} to-transparent`} />
-              
+
               <div className="absolute bottom-6 left-6 z-10">
                 <span className="text-[11px] uppercase tracking-[0.25em] text-accent-green font-bold">
                   {cat.subtitle}
