@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Instagram, Facebook } from "lucide-react";
-import LogoImage from "../Assets/crustica-logo.png";
+import LogoImage from "../Assets/crustica-logo.webp";
 
 export const Footer = () => {
   return (

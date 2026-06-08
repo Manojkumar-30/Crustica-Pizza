@@ -2,7 +2,7 @@ import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { OrderModal } from "./OrderModal";
-import heroImage2 from "../Assets/Hero_Pizza.png";
+import heroImage2 from "../Assets/Hero_Pizza.webp";
 
 
 export const Hero = () => {

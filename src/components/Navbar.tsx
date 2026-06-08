@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Phone, Menu as MenuIcon, X, Utensils, Zap, Star } from "lucide-react";
-import LogoImage from "../Assets/crustica-logo.png";
+import LogoImage from "../Assets/crustica-logo.webp";
 import { OrderModal } from "./OrderModal";
 
 export const Navbar = () => {

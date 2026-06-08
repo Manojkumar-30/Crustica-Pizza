@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { ChefHat, Flame, Leaf } from "lucide-react";
 import { menuData, addOns } from "../data/menu";
 import { OrderModal, ORDER_PLATFORMS } from "../components/OrderModal";
-import logoSwiggy from "../Assets/swiggy.png";
-import logoZomato from "../Assets/zomato.png";
-import logoDistrict from "../Assets/district.png";
+import logoSwiggy from "../Assets/swiggy.webp";
+import logoZomato from "../Assets/zomato.webp";
+import logoDistrict from "../Assets/district.webp";
 
 export const MenuPage = () => {
   const [activeCategory, setActiveCategory] = useState(menuData[0].id);

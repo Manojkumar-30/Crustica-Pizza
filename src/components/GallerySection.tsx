@@ -6,12 +6,12 @@ import { Autoplay } from "swiper/modules";
 
 import "swiper/css";
 
-import post1 from "../Assets/Influencer-1.png";
-import post2 from "../Assets/Youtube_review1.png";
-import post3 from "../Assets/Facebook _review 1.png";
-import post4 from "../Assets/Instagram_review2.png";
-import post5 from "../Assets/Instagram_review3.png";
-import post6 from "../Assets/Instagram_review4.png";
+import post1 from "../Assets/Influencer-1.webp";
+import post2 from "../Assets/Youtube_review1.webp";
+import post3 from "../Assets/Facebook _review 1.webp";
+import post4 from "../Assets/Instagram_review2.webp";
+import post5 from "../Assets/Instagram_review3.webp";
+import post6 from "../Assets/Instagram_review4.webp";
 
 
 const socialPosts = [

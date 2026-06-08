@@ -26,7 +26,7 @@ export const menuData: MenuCategory[] = [
         price: { reg: 310, lg: 495 },
         description: "Wood-fired sourdough crust topped with roasted garlic, fresh garden veggies, artisan chilli oil, and aged Parmesan.",
         tag: "Chef's Special",
-        image: "src/Assets/fries.jpg",
+        image: "src/Assets/fries.webp",
         rating: 4.9,
         reviews: 128,
         prepTime: "15-20 min",

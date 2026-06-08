@@ -1,9 +1,9 @@
 import { motion } from "framer-motion";
 import { Leaf } from "lucide-react";
-import MainEntire from "../Assets/main_entire.jpg";
-import Interior2 from "../Assets/interior-3.jpg";
-import Interior from "../Assets/interior.jpg";
-import Billing from "../Assets/Billing.jpg";
+import MainEntire from "../Assets/main_entire.webp";
+import Interior2 from "../Assets/interior-3.webp";
+import Interior from "../Assets/interior.webp";
+import Billing from "../Assets/Billing.webp";
 
 export const ExperienceSection = () => {
   const reviews = [

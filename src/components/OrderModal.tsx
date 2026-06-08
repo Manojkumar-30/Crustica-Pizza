@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X, Utensils, Zap, Star, ArrowUpRight } from "lucide-react";
-import logoSwiggy from "../Assets/swiggy.png";
-import logoZomato from "../Assets/zomato.png";
-import logoDistrict from "../Assets/district.png";
+import logoSwiggy from "../Assets/swiggy.webp";
+import logoZomato from "../Assets/zomato.webp";
+import logoDistrict from "../Assets/district.webp";
 
 export const ORDER_PLATFORMS = [
   {
