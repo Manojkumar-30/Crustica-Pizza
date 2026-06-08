@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { ChevronRight, ArrowRight } from "lucide-react";
 import combosImage from "../Assets/combo.png";
 import MenuImage from "../Assets/menu-pizza.png";
-import drinksImage from "../Assets/drinks.png";
+import drinksImage from "../Assets/Drinks.png";
 import combosImage2 from "../Assets/Combos.png";
 
 
